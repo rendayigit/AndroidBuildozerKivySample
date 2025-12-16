@@ -2,30 +2,9 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Init App",
-      "type": "shell",
-      "command": "buildozer init",
-      "options": {
-        "env": {
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
-          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
-        }
-      },
-      "group": {
-        "kind": "build",
-        "isDefault": true
-      },
-      "presentation": {
-        "echo": true,
-        "reveal": "always",
-        "focus": false,
-        "panel": "shared"
-      }
-    },
-    {
       "label": "Build App",
       "type": "shell",
-      "command": "buildozer -v android debug",
+      "command": "buildozer init; buildozer -v android debug",
       "options": {
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
