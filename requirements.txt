@@ -1,0 +1,5 @@
+buildozer
+kivy
+setuptools
+Cython==0.29.36
+sh<2.0

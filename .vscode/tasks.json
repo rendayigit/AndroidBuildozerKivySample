@@ -1,0 +1,74 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Init App",
+      "type": "shell",
+      "command": "buildozer init",
+      "options": {
+        "env": {
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
+          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Build App",
+      "type": "shell",
+      "command": "buildozer -v android debug",
+      "options": {
+        "env": {
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
+          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared"
+      }
+    },
+    {
+      "label": "Run App",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["main.py"],
+      "options": {
+        "env": {
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
+          // Force Kivy window width
+          "KCFG_GRAPHICS_WIDTH": "405",
+          // Force Kivy window height
+          "KCFG_GRAPHICS_HEIGHT": "720",
+          // Optional: Prevent resizing to keep the phone feel
+          "KCFG_GRAPHICS_RESIZABLE": "0"
+        }
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
+    }
+  ]
+}
