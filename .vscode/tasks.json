@@ -43,6 +43,26 @@
         "focus": true,
         "panel": "shared"
       }
+    },
+    {
+      "label": "Run Hot Reload",
+      "type": "shell",
+      "command": "${workspaceFolder}/.venv/bin/python",
+      "args": ["main.py", "-m", "screen:one,portrait,scale=0.5"],
+      "options": {
+        "env": {
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
+          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
+          "DEBUG": "1" // required to enable Kaki's watcher
+        }
+      },
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
     }
   ]
 }
