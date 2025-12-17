@@ -63,6 +63,25 @@
         "focus": true,
         "panel": "shared"
       }
+    },
+    {
+      "label": "Install & Run on Phone (Logcat)",
+      "type": "shell",
+      // builds (if needed), installs, opens app, and shows logs
+      "command": "buildozer android debug deploy run logcat",
+      "options": {
+        "env": {
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
+          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+        }
+      },
+      "group": "test",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": true,
+        "panel": "shared"
+      }
     }
   ]
 }
