@@ -1,5 +1,5 @@
 bin/
 .venv/
 .buildozer/
+__pycache__/
 buildozer.spec
-*.pyc
