@@ -1,0 +1,31 @@
+<LiveLayout>:
+    orientation: 'vertical'
+    padding: 50
+    spacing: 20
+    
+    canvas.before:
+        Color:
+            rgba: 0.1, 0.1, 0.1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    Label:
+        text: root.my_text_variable
+        font_size: '40sp'
+        color: root.text_color
+        bold: True
+
+    Button:
+        text: "Make it Green"
+        background_color: 0, 1, 0, 1
+        size_hint_y: None
+        height: '60dp'
+        on_press: root.change_to_green()
+
+    Button:
+        text: "Make it Pink"
+        background_color: 1, 0, 1, 1
+        size_hint_y: None
+        height: '60dp'
+        on_press: root.change_to_pink()
