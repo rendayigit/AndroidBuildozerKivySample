@@ -1,5 +1,6 @@
 from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import StringProperty, ListProperty
+from kivy.logger import Logger
 
 # Note: We don't import Builder here anymore.
 # Kaki loads the .kv file in main.py automatically.
@@ -10,6 +11,8 @@ class LiveLayout(BoxLayout):
     text_color = ListProperty([1, 1, 1, 1])
 
     def change_to_green(self):
+        Logger.info('MyApp: Green button was pressed!')
+
         self.my_text_variable = "Green Button Clicked!"
         self.text_color = [0, 1, 0, 1]
 
