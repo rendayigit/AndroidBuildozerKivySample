@@ -1,6 +1,6 @@
-# AndroidBuildozerKivySample
+# Kivy Sample Application
 
-Sample Android application written in python using buildozer and kivy
+Sample Android application written in python using kivy and buildozer
 
 Dependencies
 
