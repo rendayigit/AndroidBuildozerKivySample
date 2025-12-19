@@ -1,0 +1,88 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: Run App (Desktop)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": ["-m", "screen:phone_oneplus_6t,portrait,scale=0.3"],
+      "env": {
+        "KIVY_LOG_LEVEL": "debug",
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Run App (Desktop - No Screen Emulation)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Run App with Hot Reload",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "console": "integratedTerminal",
+      "args": ["-m", "screen:phone_oneplus_6t,portrait,scale=0.3"],
+      "env": {
+        "DEBUG": "1",
+        "KIVY_LOG_LEVEL": "debug",
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Debug app_logic.py (Direct)",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/app_logic.py",
+      "console": "integratedTerminal",
+      "env": {
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Debug Current File",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${file}",
+      "console": "integratedTerminal",
+      "env": {
+        "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
+      },
+      "justMyCode": true
+    },
+    {
+      "name": "Python: Attach to Remote (Android via adb)",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/data/data/org.test.myapp/files/app"
+        }
+      ],
+      "justMyCode": false
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Build & Debug (Desktop)",
+      "configurations": ["Python: Run App (Desktop)"],
+      "stopAll": true
+    }
+  ]
+}

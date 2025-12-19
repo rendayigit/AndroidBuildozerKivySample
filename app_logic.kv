@@ -1,3 +1,61 @@
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import FadeTransition kivy.uix.screenmanager.FadeTransition
+#:import SwapTransition kivy.uix.screenmanager.SwapTransition
+
+#:include screens/home.kv
+#:include screens/animation.kv
+#:include screens/widgets.kv
+#:include screens/touch.kv
+#:include screens/canvas.kv
+#:include screens/about.kv
+
+# ============================================================================
+# MAIN SCREEN MANAGER
+# ============================================================================
+<DemoScreenManager>:
+    transition: SlideTransition()
+    HomeScreen:
+    AnimationDemo:
+    WidgetDemo:
+    TouchDemo:
+    CanvasDemo:
+    AboutScreen:
+
+# ============================================================================
+# REUSABLE COMPONENTS
+# ============================================================================
+<NavButton@Button>:
+    size_hint_y: None
+    height: '55dp'
+    background_color: 0.2, 0.5, 0.8, 1
+    bold: True
+    font_size: '16sp'
+
+<BackButton@Button>:
+    text: "<< Back"
+    size_hint: None, None
+    size: '90dp', '40dp'
+    pos_hint: {'x': 0.02, 'top': 0.98}
+    background_color: 0.4, 0.4, 0.4, 1
+
+<DemoTitle@Label>:
+    size_hint_y: None
+    height: '50dp'
+    font_size: '24sp'
+    bold: True
+    color: 1, 1, 1, 1
+
+<SectionLabel@Label>:
+    size_hint_y: None
+    height: '30dp'
+    font_size: '14sp'
+    color: 0.7, 0.7, 0.7, 1
+    halign: 'left'
+    text_size: self.size
+
+# ============================================================================
+# LEGACY LAYOUT (kept for backwards compatibility)
+# ============================================================================
 <LiveLayout>:
     orientation: 'vertical'
     padding: 50

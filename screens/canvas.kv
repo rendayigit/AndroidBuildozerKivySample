@@ -1,0 +1,75 @@
+# ============================================================================
+# CANVAS DEMO SCREEN - Showcases canvas drawing capabilities
+# ============================================================================
+<CanvasDemo>:
+    name: 'canvas'
+    
+    canvas.before:
+        Color:
+            rgba: 0.08, 0.08, 0.12, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    BackButton:
+        on_release: root.go_to_screen('home', 'right')
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp'
+        spacing: '15dp'
+        
+        DemoTitle:
+            text: "Canvas Drawing"
+        
+        # Canvas Area
+        Widget:
+            canvas.before:
+                Color:
+                    rgba: 0.12, 0.12, 0.18, 1
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [15]
+                
+                PushMatrix
+                Rotate:
+                    angle: root.shape_rotation
+                    origin: self.center
+                
+                # Circle
+                Color:
+                    rgba: root.shape_color
+                Ellipse:
+                    pos: self.center_x - 50, self.center_y - 50
+                    size: 100, 100
+                
+                # Rectangle outline
+                Color:
+                    rgba: 1, 0.5, 0.2, 0.8
+                Line:
+                    rectangle: self.center_x - 70, self.center_y - 70, 140, 140
+                    width: 2
+                
+                # Triangle
+                Color:
+                    rgba: 0.2, 1, 0.5, 0.6
+                Triangle:
+                    points: self.center_x, self.center_y + 80, self.center_x - 60, self.center_y - 40, self.center_x + 60, self.center_y - 40
+                
+                PopMatrix
+        
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '10dp'
+            
+            Button:
+                text: "Random Color"
+                background_color: root.shape_color
+                on_release: root.randomize_color()
+            
+            Button:
+                text: "Rotate"
+                background_color: 0.4, 0.4, 0.8, 1
+                on_release: root.rotate_shape()

@@ -7,14 +7,12 @@ from kivy.utils import platform
 # ---------------------------------------------------------
 if platform == "android":
     import app_logic
-    from kivy.lang import Builder  # <--- ADD THIS
+    from kivy.lang import Builder
 
     class LiveApp(App):
         def build(self):
-            # <--- ADD THIS LINE
             # Manually load the KV file since it doesn't match the App name
             Builder.load_file("app_logic.kv")
-
             return app_logic.build_layout()
 
 
@@ -25,9 +23,28 @@ else:
     from kaki.app import App as KakiApp
 
     class LiveApp(KakiApp, App):
-        # Kaki loads this automatically on PC
+        # Kaki loads these files automatically on PC for hot reload
         KV_FILES = ["app_logic.kv"]
-        CLASSES = {"LiveLayout": "app_logic"}
+        
+        # Register all classes that should be hot-reloadable
+        CLASSES = {
+            "DemoScreenManager": "app_logic",
+            "BaseScreen": "app_logic",
+            "HomeScreen": "app_logic",
+            "AnimationDemo": "app_logic",
+            "WidgetDemo": "app_logic",
+            "TouchDemo": "app_logic",
+            "CanvasDemo": "app_logic",
+            "AboutScreen": "app_logic",
+            "LiveLayout": "app_logic",  # Legacy support
+        }
+        
+        # Watch all KV files for hot reload
+        # Note: Only list the main KV file - it includes the others via #:include
+        KV_FILES = [
+            "app_logic.kv",
+        ]
+        
         AUTORELOADER_PATHS = [(os.getcwd(), {"recursive": True})]
 
         def build_app(self, first=False):
@@ -41,7 +58,6 @@ else:
             except Exception as e:
                 print(f"ERROR: {e}")
                 from kivy.uix.label import Label
-
                 return Label(text=str(e), color=(1, 0, 0, 1))
 
 

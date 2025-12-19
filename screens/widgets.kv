@@ -1,0 +1,107 @@
+# ============================================================================
+# WIDGET DEMO SCREEN - Showcases various Kivy widgets
+# ============================================================================
+<WidgetDemo>:
+    name: 'widgets'
+    
+    canvas.before:
+        Color:
+            rgba: 0.08, 0.08, 0.12, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    BackButton:
+        on_release: root.go_to_screen('home', 'right')
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp'
+        spacing: '12dp'
+        
+        DemoTitle:
+            text: "Widget Showcase"
+        
+        # Slider
+        SectionLabel:
+            text: "Slider"
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            spacing: '10dp'
+            Slider:
+                min: 0
+                max: 100
+                value: root.slider_value
+                on_value: root.on_slider_change(self.value)
+            Label:
+                size_hint_x: None
+                width: '50dp'
+                text: f"{root.slider_value:.0f}%"
+        
+        # Progress Bar
+        SectionLabel:
+            text: "Progress Bar (Auto-animating)"
+        ProgressBar:
+            size_hint_y: None
+            height: '25dp'
+            max: 100
+            value: root.progress_value
+        
+        # Switch
+        SectionLabel:
+            text: "Toggle Switch"
+        BoxLayout:
+            size_hint_y: None
+            height: '45dp'
+            Switch:
+                active: root.switch_state
+                on_active: root.on_switch_change(self.active)
+            Label:
+                text: "ON" if root.switch_state else "OFF"
+                color: (0.3, 1, 0.3, 1) if root.switch_state else (0.5, 0.5, 0.5, 1)
+        
+        # Spinner (Dropdown)
+        SectionLabel:
+            text: "Dropdown Spinner"
+        Spinner:
+            size_hint_y: None
+            height: '45dp'
+            text: root.spinner_text
+            values: ['Option A', 'Option B', 'Option C', 'Python', 'Kivy', 'Android']
+            on_text: root.on_spinner_select(self.text)
+        
+        # Text Input
+        SectionLabel:
+            text: "Text Input"
+        TextInput:
+            size_hint_y: None
+            height: '45dp'
+            hint_text: "Type something..."
+            multiline: False
+            on_text: root.on_text_change(self.text)
+        
+        # Checkbox
+        BoxLayout:
+            size_hint_y: None
+            height: '40dp'
+            CheckBox:
+                size_hint_x: None
+                width: '50dp'
+                on_active: root.on_checkbox_change(self.active)
+            Label:
+                text: "I agree to the terms"
+                halign: 'left'
+                text_size: self.size
+                valign: 'center'
+        
+        # Status
+        Label:
+            size_hint_y: None
+            height: '40dp'
+            text: root.status_text
+            color: 0.3, 0.8, 1, 1
+            font_size: '14sp'
+        
+        Widget:
+            size_hint_y: 0.1

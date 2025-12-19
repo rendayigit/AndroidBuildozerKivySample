@@ -1,0 +1,86 @@
+# ============================================================================
+# ANIMATION DEMO SCREEN - Showcases various animation types
+# ============================================================================
+<AnimationDemo>:
+    name: 'animation'
+    
+    canvas.before:
+        Color:
+            rgba: 0.08, 0.08, 0.12, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    
+    BackButton:
+        on_release: root.go_to_screen('home', 'right')
+    
+    FloatLayout:
+        # Animated Box
+        Widget:
+            size_hint: None, None
+            size: '80dp', '80dp'
+            pos_hint: {'center_x': root.box_x, 'center_y': root.box_y}
+            canvas.before:
+                PushMatrix
+                Rotate:
+                    angle: root.rotation_angle
+                    origin: self.center
+                Scale:
+                    x: root.scale_factor
+                    y: root.scale_factor
+                    origin: self.center
+                Color:
+                    rgba: root.box_color
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [15]
+            canvas.after:
+                PopMatrix
+    
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '20dp'
+        spacing: '10dp'
+        
+        Widget:
+            size_hint_y: 0.1
+        
+        DemoTitle:
+            text: "Animation Demo"
+        
+        Widget:
+            size_hint_y: 0.5
+        
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '10dp'
+            
+            Button:
+                text: "Bounce"
+                background_color: 1, 0.4, 0.4, 1
+                on_release: root.animate_bounce()
+            
+            Button:
+                text: "Spin"
+                background_color: 0.4, 1, 0.4, 1
+                on_release: root.animate_spin()
+        
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '10dp'
+            
+            Button:
+                text: "Colors"
+                background_color: 0.4, 0.4, 1, 1
+                on_release: root.animate_color_cycle()
+            
+            Button:
+                text: "All!"
+                background_color: 1, 0.4, 1, 1
+                on_release: root.animate_all()
+        
+        Widget:
+            size_hint_y: 0.1
