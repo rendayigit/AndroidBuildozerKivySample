@@ -14,7 +14,7 @@ A sample template project for developing Android applications using **Python**, 
 
 ## 📁 Project Structure
 
-```
+```bash
 ├── main.py              # App entry point (Android vs Desktop handling)
 ├── app_logic.py         # Python logic for all screens
 ├── app_logic.kv         # Main KV file (imports screen KV files)
@@ -46,8 +46,9 @@ sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf \
 ### Python Environment
 
 ```bash
-# Create virtual environment
-python3 -m venv .venv
+# Create virtual environment (include system site packages)
+# This sets `include-system-site-packages = true` in `.venv/pyvenv.cfg`.
+python3 -m venv .venv --system-site-packages
 source .venv/bin/activate
 
 # Install dependencies
@@ -152,6 +153,7 @@ The APK will be in the `bin/` folder.
 ### Adding a New Screen
 
 1. **Create the screen class** in `app_logic.py`:
+
 ```python
 class MyNewScreen(BaseScreen):
     """Your new screen."""
@@ -162,6 +164,7 @@ class MyNewScreen(BaseScreen):
 ```
 
 2. **Create a KV file** at `screens/myscreen.kv`:
+
 ```kv
 <MyNewScreen>:
     name: 'myscreen'
@@ -192,11 +195,13 @@ class MyNewScreen(BaseScreen):
 ```
 
 3. **Include the KV file** in `app_logic.kv`:
+
 ```kv
 #:include screens/myscreen.kv
 ```
 
 4. **Add to the screen manager** in `app_logic.kv`:
+
 ```kv
 <DemoScreenManager>:
     ...
@@ -204,6 +209,7 @@ class MyNewScreen(BaseScreen):
 ```
 
 5. **Register for hot reload** in `main.py`:
+
 ```python
 CLASSES = {
     ...
@@ -212,6 +218,7 @@ CLASSES = {
 ```
 
 6. **Add navigation** from home screen in `screens/home.kv`:
+
 ```kv
 NavButton:
     text: "My New Screen"
@@ -221,6 +228,7 @@ NavButton:
 ### Adding Android Permissions
 
 Edit `buildozer.spec`:
+
 ```spec
 android.permissions = android.permission.INTERNET, android.permission.CAMERA
 ```
