@@ -1,25 +1,24 @@
-# ============================================================================
-# WIDGET DEMO SCREEN - Showcases various Kivy widgets
-# ============================================================================
-<WidgetDemo>:
+# Widget Demo Screen - Showcases various Kivy widgets
+
+<WidgetsScreen>:
     name: 'widgets'
-    
+
     canvas.before:
         Color:
             rgba: 0.08, 0.08, 0.12, 1
         Rectangle:
             pos: self.pos
             size: self.size
-    
+
     BackButton:
-        on_release: root.go_to_screen('home', 'right')
-    
+        on_release: root.go_to('home', 'right')
+
     BoxLayout:
         orientation: 'vertical'
         padding: '20dp'
         spacing: '12dp'
-        
-        DemoTitle:
+
+        ScreenTitle:
             text: "Widget Showcase"
         
         # Slider
@@ -102,6 +101,6 @@
             text: root.status_text
             color: 0.3, 0.8, 1, 1
             font_size: '14sp'
-        
+
         Widget:
             size_hint_y: 0.1

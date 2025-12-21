@@ -61,7 +61,7 @@
       "label": "Run App",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python",
-      "args": ["main.py", "-m", "screen:phone_oneplus_6t,portrait,scale=0.2"],
+      "args": ["main.py", "-m", "screen:phone_oneplus_6t,portrait,scale=0.5"],
       "options": {
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
@@ -83,7 +83,7 @@
       "label": "Run Hot Reload",
       "type": "shell",
       "command": "${workspaceFolder}/.venv/bin/python",
-      "args": ["main.py", "-m", "screen:phone_oneplus_6t,portrait,scale=0.2"],
+      "args": ["main.py", "-m", "screen:phone_oneplus_6t,portrait,scale=0.5"],
       "options": {
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",

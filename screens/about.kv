@@ -1,34 +1,33 @@
-# ============================================================================
-# ABOUT SCREEN - App information and credits
-# ============================================================================
+# About Screen - App information and credits
+
 <AboutScreen>:
     name: 'about'
-    
+
     canvas.before:
         Color:
             rgba: 0.08, 0.08, 0.12, 1
         Rectangle:
             pos: self.pos
             size: self.size
-    
+
     BackButton:
-        on_release: root.go_to_screen('home', 'right')
-    
+        on_release: root.go_to('home', 'right')
+
     BoxLayout:
         orientation: 'vertical'
         padding: '30dp'
         spacing: '20dp'
-        
+
         Widget:
             size_hint_y: 0.1
-        
+
         Label:
             text: "{ }"
             font_size: '60sp'
             size_hint_y: None
             height: '80dp'
             color: 0.3, 0.7, 1, 1
-        
+
         Label:
             text: "Kivy Demo App"
             font_size: '28sp'
@@ -36,29 +35,29 @@
             size_hint_y: None
             height: '40dp'
             color: 0.3, 0.7, 1, 1
-        
+
         Label:
-            text: root.version_text
+            text: root.version
             font_size: '14sp'
             size_hint_y: None
             height: '25dp'
             color: 0.5, 0.5, 0.5, 1
-        
+
         Widget:
             size_hint_y: None
             height: '20dp'
-        
+
         Label:
-            text: root.info_text
+            text: root.description
             font_size: '15sp'
             halign: 'center'
             valign: 'top'
             text_size: self.size
             color: 0.8, 0.8, 0.8, 1
-        
+
         Widget:
             size_hint_y: 1
-        
+
         Label:
             text: "Built with Python + Kivy"
             font_size: '12sp'

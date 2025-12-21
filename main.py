@@ -2,64 +2,47 @@ import os
 from kivy.app import App
 from kivy.utils import platform
 
-# ---------------------------------------------------------
-# SCENARIO 1: ON ANDROID (Standard Run)
-# ---------------------------------------------------------
-if platform == "android":
-    import app_logic
-    from kivy.lang import Builder
 
-    class LiveApp(App):
-        def build(self):
-            # Manually load the KV file since it doesn't match the App name
-            Builder.load_file("app_logic.kv")
-            return app_logic.build_layout()
+def _create_app_class():
+    if platform == "android":
+        from kivy.lang import Builder
+        from app import AppScreenManager
+        import screens as _screens  # noqa: F401
 
+        class AndroidApp(App):
+            def build(self):
+                Builder.load_file("app/app.kv")
+                return AppScreenManager()
 
-# ---------------------------------------------------------
-# SCENARIO 2: ON PC (Hot Reload enabled)
-# ---------------------------------------------------------
-else:
-    from kaki.app import App as KakiApp
+        return AndroidApp
+    else:
+        from kaki.app import App as KakiApp
 
-    class LiveApp(KakiApp, App):
-        # Kaki loads these files automatically on PC for hot reload
-        KV_FILES = ["app_logic.kv"]
-        
-        # Register all classes that should be hot-reloadable
-        CLASSES = {
-            "DemoScreenManager": "app_logic",
-            "BaseScreen": "app_logic",
-            "HomeScreen": "app_logic",
-            "AnimationDemo": "app_logic",
-            "WidgetDemo": "app_logic",
-            "TouchDemo": "app_logic",
-            "CanvasDemo": "app_logic",
-            "AboutScreen": "app_logic",
-            "LiveLayout": "app_logic",  # Legacy support
-        }
-        
-        # Watch all KV files for hot reload
-        # Note: Only list the main KV file - it includes the others via #:include
-        KV_FILES = [
-            "app_logic.kv",
-        ]
-        
-        AUTORELOADER_PATHS = [(os.getcwd(), {"recursive": True})]
+        class DesktopApp(KakiApp, App):
+            CLASSES = {
+                "AppScreenManager": "app",
+                "BaseScreen": "app",
+                "HomeScreen": "screens.home",
+                "AnimationScreen": "screens.animation",
+                "WidgetsScreen": "screens.widgets",
+                "TouchScreen": "screens.touch",
+                "CanvasScreen": "screens.canvas",
+                "AboutScreen": "screens.about",
+            }
+            KV_FILES = ["app/app.kv"]
+            AUTORELOADER_PATHS = [(os.getcwd(), {"recursive": True})]
 
-        def build_app(self, first=False):
-            try:
-                import app_logic
+            def build_app(self, first=False):  # type: ignore[override]
                 import importlib
+                import app
+                import screens as screens_module
 
-                importlib.reload(app_logic)
-                print("Reloading app_logic...")
-                return app_logic.build_layout()
-            except Exception as e:
-                print(f"ERROR: {e}")
-                from kivy.uix.label import Label
-                return Label(text=str(e), color=(1, 0, 0, 1))
+                importlib.reload(app)
+                importlib.reload(screens_module)
+                return app.AppScreenManager()
+
+        return DesktopApp
 
 
 if __name__ == "__main__":
-    LiveApp().run()
+    _create_app_class()().run()

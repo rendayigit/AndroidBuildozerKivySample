@@ -1,21 +1,20 @@
-# ============================================================================
-# HOME SCREEN - Main navigation hub
-# ============================================================================
+# Home Screen - Main navigation hub
+
 <HomeScreen>:
     name: 'home'
-    
+
     canvas.before:
         Color:
             rgba: 0.08, 0.08, 0.12, 1
         Rectangle:
             pos: self.pos
             size: self.size
-    
+
     BoxLayout:
         orientation: 'vertical'
         padding: '20dp'
         spacing: '15dp'
-        
+
         Label:
             text: "KIVY DEMO"
             font_size: '32sp'
@@ -23,38 +22,38 @@
             size_hint_y: None
             height: '60dp'
             color: 0.3, 0.7, 1, 1
-        
+
         Label:
             text: "Android App Template"
             font_size: '16sp'
             size_hint_y: None
             height: '30dp'
             color: 0.6, 0.6, 0.6, 1
-        
+
         Widget:
             size_hint_y: None
             height: '20dp'
-        
+
         NavButton:
             text: "[>] Animations"
-            on_release: root.go_to_screen('animation', 'left')
-        
+            on_release: root.go_to('animation')
+
         NavButton:
             text: "[=] Widgets"
-            on_release: root.go_to_screen('widgets', 'left')
-        
+            on_release: root.go_to('widgets')
+
         NavButton:
             text: "[+] Touch Demo"
-            on_release: root.go_to_screen('touch', 'left')
-        
+            on_release: root.go_to('touch')
+
         NavButton:
             text: "[#] Canvas Drawing"
-            on_release: root.go_to_screen('canvas', 'left')
-        
+            on_release: root.go_to('canvas')
+
         NavButton:
             text: "[i] About"
             background_color: 0.3, 0.3, 0.4, 1
-            on_release: root.go_to_screen('about', 'left')
-        
+            on_release: root.go_to('about')
+
         Widget:
             size_hint_y: 1
