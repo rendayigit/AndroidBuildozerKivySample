@@ -5,102 +5,228 @@
 
     canvas.before:
         Color:
-            rgba: 0.08, 0.08, 0.12, 1
+            rgba: 0.06, 0.065, 0.09, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
+    ScrollView:
+        do_scroll_x: False
+        bar_width: 0
+        size_hint: 1, 1
+        pos_hint: {'x': 0, 'y': 0}
+        
+        BoxLayout:
+            orientation: 'vertical'
+            padding: '24dp', '60dp', '24dp', '24dp'
+            spacing: '10dp'
+            size_hint_y: None
+            height: self.minimum_height
+
+            ScreenTitle:
+                text: "Widgets"
+            
+            Label:
+                text: "Interactive UI components"
+                font_size: '13sp'
+                size_hint_y: None
+                height: '24dp'
+                color: 0.5, 0.53, 0.6, 1
+            
+            Widget:
+                size_hint_y: None
+                height: '12dp'
+            
+            # Slider Card
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: '100dp'
+                padding: '18dp'
+                spacing: '8dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [16]
+                SectionLabel:
+                    text: "SLIDER"
+                BoxLayout:
+                    size_hint_y: None
+                    height: '40dp'
+                    spacing: '16dp'
+                    Slider:
+                        min: 0
+                        max: 100
+                        value: root.slider_value
+                        on_value: root.on_slider_change(self.value)
+                        cursor_size: '24dp', '24dp'
+                        value_track: True
+                        value_track_color: 0.35, 0.55, 1.0, 1
+                    Label:
+                        size_hint_x: None
+                        width: '50dp'
+                        text: f"{root.slider_value:.0f}%"
+                        font_size: '16sp'
+                        bold: True
+                        color: 0.35, 0.55, 1.0, 1
+            
+            # Progress Bar Card
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: '90dp'
+                padding: '18dp'
+                spacing: '8dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [16]
+                SectionLabel:
+                    text: "PROGRESS"
+                Widget:
+                    size_hint_y: None
+                    height: '8dp'
+                    canvas:
+                        Color:
+                            rgba: 0.18, 0.19, 0.24, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.size
+                            radius: [4]
+                        Color:
+                            rgba: 0.55, 0.85, 0.65, 1
+                        RoundedRectangle:
+                            pos: self.pos
+                            size: self.width * root.progress_value / 100, self.height
+                            radius: [4]
+            
+            # Switch Card
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: '85dp'
+                padding: '18dp'
+                spacing: '8dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [16]
+                SectionLabel:
+                    text: "TOGGLE"
+                BoxLayout:
+                    size_hint_y: None
+                    height: '40dp'
+                    spacing: '16dp'
+                    Switch:
+                        active: root.switch_state
+                        on_active: root.on_switch_change(self.active)
+                        size_hint_x: None
+                        width: '80dp'
+                    Label:
+                        text: "Enabled" if root.switch_state else "Disabled"
+                        font_size: '15sp'
+                        halign: 'left'
+                        text_size: self.size
+                        valign: 'center'
+                        color: (0.55, 0.85, 0.65, 1) if root.switch_state else (0.5, 0.5, 0.5, 1)
+            
+            # Spinner Card
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: '100dp'
+                padding: '18dp'
+                spacing: '8dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [16]
+                SectionLabel:
+                    text: "DROPDOWN"
+                Spinner:
+                    size_hint_y: None
+                    height: '46dp'
+                    text: root.spinner_text
+                    values: ['Option A', 'Option B', 'Option C', 'Python', 'Kivy', 'Android']
+                    on_text: root.on_spinner_select(self.text)
+                    background_normal: ''
+                    background_color: 0.14, 0.15, 0.19, 1
+                    color: 0.95, 0.96, 0.98, 1
+            
+            # Text Input Card
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: '100dp'
+                padding: '18dp'
+                spacing: '8dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [16]
+                SectionLabel:
+                    text: "TEXT INPUT"
+                TextInput:
+                    size_hint_y: None
+                    height: '46dp'
+                    hint_text: "Type something..."
+                    hint_text_color: 0.4, 0.43, 0.5, 1
+                    multiline: False
+                    on_text: root.on_text_change(self.text)
+                    background_normal: ''
+                    background_active: ''
+                    background_color: 0.14, 0.15, 0.19, 1
+                    foreground_color: 0.95, 0.96, 0.98, 1
+                    cursor_color: 0.35, 0.55, 1.0, 1
+                    padding: ['16dp', '12dp']
+            
+            # Checkbox Card
+            BoxLayout:
+                orientation: 'horizontal'
+                size_hint_y: None
+                height: '60dp'
+                padding: '18dp', '10dp'
+                spacing: '12dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [16]
+                CheckBox:
+                    size_hint: None, None
+                    size: '32dp', '32dp'
+                    on_active: root.on_checkbox_change(self.active)
+                    color: 0.35, 0.55, 1.0, 1
+                Label:
+                    text: "I agree to the terms and conditions"
+                    font_size: '14sp'
+                    halign: 'left'
+                    text_size: self.size
+                    valign: 'center'
+                    color: 0.8, 0.82, 0.86, 1
+            
+            # Bottom padding
+            Widget:
+                size_hint_y: None
+                height: '20dp'
+
+    # Back button on top of ScrollView
     BackButton:
         on_release: root.go_to('home', 'right')
-
-    BoxLayout:
-        orientation: 'vertical'
-        padding: '20dp'
-        spacing: '12dp'
-
-        ScreenTitle:
-            text: "Widget Showcase"
-        
-        # Slider
-        SectionLabel:
-            text: "Slider"
-        BoxLayout:
-            size_hint_y: None
-            height: '40dp'
-            spacing: '10dp'
-            Slider:
-                min: 0
-                max: 100
-                value: root.slider_value
-                on_value: root.on_slider_change(self.value)
-            Label:
-                size_hint_x: None
-                width: '50dp'
-                text: f"{root.slider_value:.0f}%"
-        
-        # Progress Bar
-        SectionLabel:
-            text: "Progress Bar (Auto-animating)"
-        ProgressBar:
-            size_hint_y: None
-            height: '25dp'
-            max: 100
-            value: root.progress_value
-        
-        # Switch
-        SectionLabel:
-            text: "Toggle Switch"
-        BoxLayout:
-            size_hint_y: None
-            height: '45dp'
-            Switch:
-                active: root.switch_state
-                on_active: root.on_switch_change(self.active)
-            Label:
-                text: "ON" if root.switch_state else "OFF"
-                color: (0.3, 1, 0.3, 1) if root.switch_state else (0.5, 0.5, 0.5, 1)
-        
-        # Spinner (Dropdown)
-        SectionLabel:
-            text: "Dropdown Spinner"
-        Spinner:
-            size_hint_y: None
-            height: '45dp'
-            text: root.spinner_text
-            values: ['Option A', 'Option B', 'Option C', 'Python', 'Kivy', 'Android']
-            on_text: root.on_spinner_select(self.text)
-        
-        # Text Input
-        SectionLabel:
-            text: "Text Input"
-        TextInput:
-            size_hint_y: None
-            height: '45dp'
-            hint_text: "Type something..."
-            multiline: False
-            on_text: root.on_text_change(self.text)
-        
-        # Checkbox
-        BoxLayout:
-            size_hint_y: None
-            height: '40dp'
-            CheckBox:
-                size_hint_x: None
-                width: '50dp'
-                on_active: root.on_checkbox_change(self.active)
-            Label:
-                text: "I agree to the terms"
-                halign: 'left'
-                text_size: self.size
-                valign: 'center'
-        
-        # Status
-        Label:
-            size_hint_y: None
-            height: '40dp'
-            text: root.status_text
-            color: 0.3, 0.8, 1, 1
-            font_size: '14sp'
-
-        Widget:
-            size_hint_y: 0.1

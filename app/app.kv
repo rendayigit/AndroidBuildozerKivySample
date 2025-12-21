@@ -1,6 +1,10 @@
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
-#:import ButtonBehavior kivy.uix.behaviors.ButtonBehavior
 
+# Theme and reusable components
+#:include app/theme.kv
+#:include app/components.kv
+
+# Screen layouts
 #:include screens/home.kv
 #:include screens/animation.kv
 #:include screens/widgets.kv
@@ -9,58 +13,10 @@
 #:include screens/about.kv
 
 <AppScreenManager>:
-    transition: SlideTransition()
+    transition: SlideTransition(duration=0.25)
     HomeScreen:
     AnimationScreen:
     WidgetsScreen:
     TouchScreen:
     CanvasScreen:
     AboutScreen:
-
-# Reusable Components
-<NavButton@ButtonBehavior+BoxLayout>:
-    size_hint_y: None
-    height: '55dp'
-    spacing: '10dp'
-    icon: ''
-    text: ''
-    canvas.before:
-        Color:
-            rgba: 0.2, 0.5, 0.8, 1
-        RoundedRectangle:
-            pos: self.pos
-            size: self.size
-            radius: [5]
-    Image:
-        source: root.icon
-        size_hint_x: None
-        width: '50dp'
-    Label:
-        text: root.text
-        bold: True
-        font_size: '16sp'
-        halign: 'left'
-        text_size: self.size
-        valign: 'center'
-
-<BackButton@Button>:
-    text: "<< Back"
-    size_hint: None, None
-    size: '90dp', '40dp'
-    pos_hint: {'x': 0.02, 'top': 0.98}
-    background_color: 0.4, 0.4, 0.4, 1
-
-<ScreenTitle@Label>:
-    size_hint_y: None
-    height: '50dp'
-    font_size: '24sp'
-    bold: True
-    color: 1, 1, 1, 1
-
-<SectionLabel@Label>:
-    size_hint_y: None
-    height: '30dp'
-    font_size: '14sp'
-    color: 0.7, 0.7, 0.7, 1
-    halign: 'left'
-    text_size: self.size

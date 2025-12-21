@@ -5,19 +5,16 @@
 
     canvas.before:
         Color:
-            rgba: 0.08, 0.08, 0.12, 1
+            rgba: 0.06, 0.065, 0.09, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
-    BackButton:
-        on_release: root.go_to('home', 'right')
-
     FloatLayout:
-        # Animated Box
+        # Animated Box with glow effect
         Widget:
             size_hint: None, None
-            size: '80dp', '80dp'
+            size: '90dp', '90dp'
             pos_hint: {'center_x': root.box_x, 'center_y': root.box_y}
             canvas.before:
                 PushMatrix
@@ -28,25 +25,48 @@
                     x: root.scale_factor
                     y: root.scale_factor
                     origin: self.center
+                # Outer glow
+                Color:
+                    rgba: root.box_color[0], root.box_color[1], root.box_color[2], 0.2
+                RoundedRectangle:
+                    pos: self.x - 8, self.y - 8
+                    size: self.width + 16, self.height + 16
+                    radius: [24]
+                # Main shape
                 Color:
                     rgba: root.box_color
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [15]
+                    radius: [20]
+                # Inner highlight
+                Color:
+                    rgba: 1, 1, 1, 0.15
+                RoundedRectangle:
+                    pos: self.x + 4, self.y + self.height - 12
+                    size: self.width - 8, 8
+                    radius: [16, 16, 4, 4]
             canvas.after:
                 PopMatrix
 
     BoxLayout:
         orientation: 'vertical'
-        padding: '20dp'
-        spacing: '10dp'
+        padding: '24dp'
+        spacing: '12dp'
 
         Widget:
-            size_hint_y: 0.1
+            size_hint_y: 0.08
 
         ScreenTitle:
-            text: "Animation Demo"
+            text: "Animations"
+            color: 0.95, 0.96, 0.98, 1
+
+        Label:
+            text: "Tap buttons to see animations"
+            font_size: '13sp'
+            size_hint_y: None
+            height: '24dp'
+            color: 0.5, 0.53, 0.6, 1
 
         Widget:
             size_hint_y: 0.5
@@ -54,32 +74,35 @@
         BoxLayout:
             size_hint_y: None
             height: '50dp'
-            spacing: '10dp'
+            spacing: '12dp'
 
-            Button:
+            ModernButton:
                 text: "Bounce"
-                background_color: 1, 0.4, 0.4, 1
+                btn_color: 0.95, 0.45, 0.45, 1
                 on_release: root.bounce()
 
-            Button:
+            ModernButton:
                 text: "Spin"
-                background_color: 0.4, 1, 0.4, 1
+                btn_color: 0.35, 0.75, 0.55, 1
                 on_release: root.spin()
 
         BoxLayout:
             size_hint_y: None
             height: '50dp'
-            spacing: '10dp'
+            spacing: '12dp'
 
-            Button:
+            ModernButton:
                 text: "Colors"
-                background_color: 0.4, 0.4, 1, 1
+                btn_color: 0.35, 0.55, 1.0, 1
                 on_release: root.cycle_colors()
 
-            Button:
-                text: "All!"
-                background_color: 1, 0.4, 1, 1
+            ModernButton:
+                text: "Play All"
+                btn_color: 0.75, 0.45, 0.95, 1
                 on_release: root.play_all()
 
         Widget:
-            size_hint_y: 0.1
+            size_hint_y: 0.08
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

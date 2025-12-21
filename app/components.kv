@@ -1,0 +1,139 @@
+# ═══════════════════════════════════════════════════════════════
+#                    REUSABLE UI COMPONENTS
+# ═══════════════════════════════════════════════════════════════
+#:import ButtonBehavior kivy.uix.behaviors.ButtonBehavior
+
+# Navigation button for home screen menu
+<NavButton@ButtonBehavior+BoxLayout>:
+    size_hint_y: None
+    height: '62dp'
+    spacing: '16dp'
+    padding: '16dp', '0dp'
+    icon: ''
+    text: ''
+    canvas.before:
+        Color:
+            rgba: 0.12, 0.13, 0.17, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [16]
+        # Subtle top highlight
+        Color:
+            rgba: 0.35, 0.55, 1.0, 0.15
+        RoundedRectangle:
+            pos: self.x, self.y + self.height - 2
+            size: self.width, 2
+            radius: [16, 16, 0, 0]
+        # Left accent bar
+        Color:
+            rgba: 0.35, 0.55, 1.0, 0.9
+        RoundedRectangle:
+            pos: self.x, self.y + 12
+            size: 4, self.height - 24
+            radius: [2]
+    Image:
+        source: root.icon
+        size_hint_x: None
+        width: '28dp'
+        opacity: 0.9
+    Label:
+        text: root.text
+        bold: True
+        font_size: '17sp'
+        halign: 'left'
+        text_size: self.size
+        valign: 'center'
+        color: 0.95, 0.96, 0.98, 1
+
+# Back button for secondary screens
+<BackButton@Button>:
+    text: "Back"
+    size_hint: None, None
+    size: '80dp', '40dp'
+    pos_hint: {'x': 0.04, 'top': 0.97}
+    background_normal: ''
+    background_color: 0, 0, 0, 0
+    font_size: '14sp'
+    color: 0.75, 0.77, 0.82, 1
+    canvas.before:
+        Color:
+            rgba: 0.10, 0.11, 0.14, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+        Color:
+            rgba: 0.18, 0.19, 0.24, 1
+        Line:
+            rounded_rectangle: self.x, self.y, self.width, self.height, 12
+            width: 1
+    canvas:
+        Color:
+            rgba: 0.5, 0.53, 0.6, 1
+        Line:
+            points: [self.x + 18, self.center_y, self.x + 24, self.center_y + 5, self.x + 24, self.center_y - 5, self.x + 18, self.center_y]
+            width: 1.2
+            cap: 'round'
+            joint: 'round'
+
+# Screen title label
+<ScreenTitle@Label>:
+    size_hint_y: None
+    height: '56dp'
+    font_size: '26sp'
+    bold: True
+    color: 0.95, 0.96, 0.98, 1
+
+# Section label for grouping content
+<SectionLabel@Label>:
+    size_hint_y: None
+    height: '28dp'
+    font_size: '12sp'
+    bold: True
+    color: 0.5, 0.53, 0.6, 1
+    halign: 'left'
+    text_size: self.size
+
+# Modern styled button with custom color support
+<ModernButton@Button>:
+    background_normal: ''
+    background_color: 0, 0, 0, 0
+    font_size: '15sp'
+    bold: True
+    color: 0.95, 0.96, 0.98, 1
+    size_hint_y: None
+    height: '50dp'
+    btn_color: 0.35, 0.55, 1.0, 1
+    canvas.before:
+        Color:
+            rgba: self.btn_color
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+
+# Card container with surface background
+<Card@BoxLayout>:
+    orientation: 'vertical'
+    padding: '18dp'
+    spacing: '10dp'
+    size_hint_y: None
+    height: '100dp'
+    canvas.before:
+        Color:
+            rgba: 0.10, 0.11, 0.14, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [16]
+
+# Standard screen background (use in canvas.before)
+# Usage: Apply to screen's canvas.before for consistent background
+# <YourScreen>:
+#     canvas.before:
+#         Color:
+#             rgba: 0.06, 0.065, 0.09, 1
+#         Rectangle:
+#             pos: self.pos
+#             size: self.size

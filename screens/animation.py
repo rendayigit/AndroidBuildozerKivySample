@@ -5,9 +5,9 @@ from app import BaseScreen
 
 
 class AnimationScreen(BaseScreen):
-    box_x = NumericProperty(0.1)
+    box_x = NumericProperty(0.5)
     box_y = NumericProperty(0.5)
-    box_color = ListProperty([1, 0.3, 0.3, 1])
+    box_color = ListProperty([0.35, 0.55, 1.0, 1])
     rotation_angle = NumericProperty(0)
     scale_factor = NumericProperty(1)
 

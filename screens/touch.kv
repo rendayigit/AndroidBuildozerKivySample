@@ -5,64 +5,95 @@
 
     canvas.before:
         Color:
-            rgba: 0.08, 0.08, 0.12, 1
+            rgba: 0.06, 0.065, 0.09, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
-    BackButton:
-        on_release: root.go_to('home', 'right')
-
     BoxLayout:
         orientation: 'vertical'
-        padding: '20dp'
-        spacing: '15dp'
+        padding: '24dp', '60dp', '24dp', '24dp'
+        spacing: '16dp'
 
         ScreenTitle:
-            text: "Touch Interaction"
+            text: "Touch & Gestures"
 
         Label:
             size_hint_y: None
-            height: '30dp'
+            height: '28dp'
             text: root.touch_info
-            color: 0.3, 0.8, 1, 1
+            font_size: '14sp'
+            color: 0.35, 0.55, 1.0, 1
         
-        # Touch Area
+        # Touch Area with modern card style
         FloatLayout:
             id: touch_area
             canvas.before:
+                # Card background
                 Color:
-                    rgba: 0.15, 0.15, 0.2, 1
+                    rgba: 0.10, 0.11, 0.14, 1
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [15]
-                # Ripple effect
+                    radius: [20]
+                # Subtle border
                 Color:
-                    rgba: 0.3, 0.7, 1, root.ripple_opacity
+                    rgba: 0.18, 0.19, 0.24, 1
+                Line:
+                    rounded_rectangle: self.x, self.y, self.width, self.height, 20
+                    width: 1.2
+                # Ripple effect with smoother fade
+                Color:
+                    rgba: 0.35, 0.55, 1.0, root.ripple_opacity * 0.4
                 Ellipse:
                     pos: root.touch_x - root.ripple_size/2, root.touch_y - root.ripple_size/2
                     size: root.ripple_size, root.ripple_size
-                # Touch indicator
+                # Touch indicator with glow
                 Color:
-                    rgba: 1, 0.4, 0.4, 0.8
+                    rgba: 0.55, 0.85, 0.65, 0.3
                 Ellipse:
-                    pos: root.touch_x - 15, root.touch_y - 15
-                    size: 30, 30
+                    pos: root.touch_x - 24, root.touch_y - 24
+                    size: 48, 48
+                Color:
+                    rgba: 0.55, 0.85, 0.65, 0.9
+                Ellipse:
+                    pos: root.touch_x - 12, root.touch_y - 12
+                    size: 24, 24
 
             on_touch_down:
                 if self.collide_point(*args[1].pos): root.handle_touch(args[1].pos, self)
+            
+            # Hint label
+            Label:
+                text: "Tap anywhere in this area"
+                font_size: '13sp'
+                color: 0.4, 0.43, 0.5, 1
+                pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         BoxLayout:
             size_hint_y: None
             height: '50dp'
-            spacing: '10dp'
+            spacing: '12dp'
 
-            Button:
-                text: f"Touches: {root.touch_count}"
-                background_color: 0.3, 0.3, 0.4, 1
+            BoxLayout:
+                padding: '16dp', '0dp'
+                canvas.before:
+                    Color:
+                        rgba: 0.10, 0.11, 0.14, 1
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [12]
+                Label:
+                    text: f"Touches: {root.touch_count}"
+                    font_size: '15sp'
+                    bold: True
+                    color: 0.95, 0.96, 0.98, 1
 
-            Button:
+            ModernButton:
                 text: "Reset"
-                background_color: 0.8, 0.3, 0.3, 1
+                btn_color: 0.85, 0.35, 0.40, 1
                 on_release: root.reset_touches()
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

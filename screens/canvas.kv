@@ -5,70 +5,97 @@
 
     canvas.before:
         Color:
-            rgba: 0.08, 0.08, 0.12, 1
+            rgba: 0.06, 0.065, 0.09, 1
         Rectangle:
             pos: self.pos
             size: self.size
 
-    BackButton:
-        on_release: root.go_to('home', 'right')
-
     BoxLayout:
         orientation: 'vertical'
-        padding: '20dp'
-        spacing: '15dp'
+        padding: '24dp', '60dp', '24dp', '24dp'
+        spacing: '16dp'
 
         ScreenTitle:
             text: "Canvas Drawing"
         
-        # Canvas Area
+        Label:
+            text: "Vector graphics & shapes"
+            font_size: '13sp'
+            size_hint_y: None
+            height: '24dp'
+            color: 0.5, 0.53, 0.6, 1
+        
+        # Canvas Area with card style
         Widget:
             canvas.before:
+                # Card background
                 Color:
-                    rgba: 0.12, 0.12, 0.18, 1
+                    rgba: 0.10, 0.11, 0.14, 1
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
-                    radius: [15]
+                    radius: [20]
 
                 PushMatrix
                 Rotate:
                     angle: root.shape_rotation
                     origin: self.center
                 
-                # Circle
+                # Outer ring / orbit
+                Color:
+                    rgba: 0.2, 0.22, 0.28, 1
+                Line:
+                    ellipse: self.center_x - 80, self.center_y - 80, 160, 160
+                    width: 1.5
+                
+                # Circle with glow
+                Color:
+                    rgba: root.shape_color[0], root.shape_color[1], root.shape_color[2], 0.2
+                Ellipse:
+                    pos: self.center_x - 55, self.center_y - 55
+                    size: 110, 110
                 Color:
                     rgba: root.shape_color
                 Ellipse:
-                    pos: self.center_x - 50, self.center_y - 50
-                    size: 100, 100
+                    pos: self.center_x - 45, self.center_y - 45
+                    size: 90, 90
                 
-                # Rectangle outline
+                # Rectangle outline with rounded corners
                 Color:
-                    rgba: 1, 0.5, 0.2, 0.8
+                    rgba: 1, 0.6, 0.35, 0.7
                 Line:
-                    rectangle: self.center_x - 70, self.center_y - 70, 140, 140
-                    width: 2
+                    rounded_rectangle: self.center_x - 65, self.center_y - 65, 130, 130, 12
+                    width: 2.5
                 
-                # Triangle
+                # Triangle with gradient-like effect
                 Color:
-                    rgba: 0.2, 1, 0.5, 0.6
+                    rgba: 0.35, 0.95, 0.6, 0.5
                 Triangle:
-                    points: self.center_x, self.center_y + 80, self.center_x - 60, self.center_y - 40, self.center_x + 60, self.center_y - 40
+                    points: self.center_x, self.center_y + 70, self.center_x - 55, self.center_y - 35, self.center_x + 55, self.center_y - 35
+                Color:
+                    rgba: 0.35, 0.95, 0.6, 0.8
+                Line:
+                    points: [self.center_x, self.center_y + 70, self.center_x - 55, self.center_y - 35, self.center_x + 55, self.center_y - 35, self.center_x, self.center_y + 70]
+                    width: 2
+                    cap: 'round'
+                    joint: 'round'
 
                 PopMatrix
 
         BoxLayout:
             size_hint_y: None
             height: '50dp'
-            spacing: '10dp'
+            spacing: '12dp'
 
-            Button:
+            ModernButton:
                 text: "Random Color"
-                background_color: root.shape_color
+                btn_color: root.shape_color
                 on_release: root.randomize_color()
 
-            Button:
+            ModernButton:
                 text: "Rotate"
-                background_color: 0.4, 0.4, 0.8, 1
+                btn_color: 0.35, 0.55, 1.0, 1
                 on_release: root.rotate_shape()
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

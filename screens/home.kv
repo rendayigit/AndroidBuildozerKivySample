@@ -4,35 +4,65 @@
     name: 'home'
 
     canvas.before:
+        # Deep navy gradient background
         Color:
-            rgba: 0.08, 0.08, 0.12, 1
+            rgba: 0.06, 0.065, 0.09, 1
         Rectangle:
             pos: self.pos
             size: self.size
+        # Subtle top gradient glow
+        Color:
+            rgba: 0.35, 0.55, 1.0, 0.03
+        Rectangle:
+            pos: self.x, self.y + self.height * 0.6
+            size: self.width, self.height * 0.4
 
     BoxLayout:
         orientation: 'vertical'
-        padding: '20dp'
-        spacing: '15dp'
+        padding: '24dp', '40dp', '24dp', '24dp'
+        spacing: '12dp'
+
+        # App Logo / Icon area
+        Widget:
+            size_hint_y: None
+            height: '70dp'
+            canvas:
+                Color:
+                    rgba: 0.35, 0.55, 1.0, 0.15
+                Ellipse:
+                    pos: self.center_x - 35, self.center_y - 35
+                    size: 70, 70
+                Color:
+                    rgba: 0.35, 0.55, 1.0, 0.8
+                Line:
+                    ellipse: self.center_x - 28, self.center_y - 28, 56, 56
+                    width: 2
+                Color:
+                    rgba: 0.55, 0.85, 0.65, 1
+                Line:
+                    points: [self.center_x - 12, self.center_y, self.center_x, self.center_y + 14, self.center_x + 12, self.center_y - 8]
+                    width: 2.5
+                    cap: 'round'
+                    joint: 'round'
 
         Label:
-            text: "KIVY DEMO"
-            font_size: '32sp'
+            text: "Kivy Demo"
+            font_size: '34sp'
             bold: True
             size_hint_y: None
-            height: '60dp'
-            color: 0.3, 0.7, 1, 1
+            height: '50dp'
+            color: 0.95, 0.96, 0.98, 1
 
         Label:
-            text: "Android App Template"
-            font_size: '16sp'
+            text: "Modern Android App Template"
+            font_size: '14sp'
             size_hint_y: None
-            height: '30dp'
-            color: 0.6, 0.6, 0.6, 1
+            height: '24dp'
+            color: 0.5, 0.53, 0.6, 1
 
         Widget:
             size_hint_y: None
-            height: '20dp'
+            height: '28dp'
 
         NavButton:
             icon: 'assets/icons/animation.png'
@@ -46,7 +76,7 @@
 
         NavButton:
             icon: 'assets/icons/touch.png'
-            text: "Touch Demo"
+            text: "Touch & Gestures"
             on_release: root.go_to('touch')
 
         NavButton:
@@ -61,3 +91,11 @@
 
         Widget:
             size_hint_y: 1
+
+        # Footer version indicator
+        Label:
+            text: "v1.0.0"
+            font_size: '11sp'
+            size_hint_y: None
+            height: '20dp'
+            color: 0.35, 0.38, 0.45, 1
