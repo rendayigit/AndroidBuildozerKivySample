@@ -1,4 +1,5 @@
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import ButtonBehavior kivy.uix.behaviors.ButtonBehavior
 
 #:include screens/home.kv
 #:include screens/animation.kv
@@ -17,12 +18,30 @@
     AboutScreen:
 
 # Reusable Components
-<NavButton@Button>:
+<NavButton@ButtonBehavior+BoxLayout>:
     size_hint_y: None
     height: '55dp'
-    background_color: 0.2, 0.5, 0.8, 1
-    bold: True
-    font_size: '16sp'
+    spacing: '10dp'
+    icon: ''
+    text: ''
+    canvas.before:
+        Color:
+            rgba: 0.2, 0.5, 0.8, 1
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [5]
+    Image:
+        source: root.icon
+        size_hint_x: None
+        width: '50dp'
+    Label:
+        text: root.text
+        bold: True
+        font_size: '16sp'
+        halign: 'left'
+        text_size: self.size
+        valign: 'center'
 
 <BackButton@Button>:
     text: "<< Back"

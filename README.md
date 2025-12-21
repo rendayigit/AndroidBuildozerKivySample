@@ -7,8 +7,7 @@ A boilerplate for building Android apps with Python, Kivy, and Buildozer. Includ
 ### System Dependencies (Ubuntu/Debian)
 
 ```bash
-sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf \
-    libtool pkg-config zlib1g-dev libncurses-dev cmake libffi-dev libssl-dev
+sudo apt install -y git zip unzip openjdk-17-jdk python3-pip autoconf libtool pkg-config zlib1g-dev libncurses-dev cmake libffi-dev libssl-dev xclip
 ```
 
 ### Python Environment

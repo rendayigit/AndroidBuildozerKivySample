@@ -35,10 +35,15 @@ def _create_app_class():
             def build_app(self, first=False):  # type: ignore[override]
                 import importlib
                 import app
-                import screens as screens_module
+                from screens import home, animation, widgets, touch, canvas, about
 
                 importlib.reload(app)
-                importlib.reload(screens_module)
+                importlib.reload(home)
+                importlib.reload(animation)
+                importlib.reload(widgets)
+                importlib.reload(touch)
+                importlib.reload(about)
+                importlib.reload(canvas)
                 return app.AppScreenManager()
 
         return DesktopApp
