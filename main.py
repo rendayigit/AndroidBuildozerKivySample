@@ -1,5 +1,15 @@
 import os
 import glob
+import logging
+
+# Suppress noisy debug logs from file watchers
+logging.getLogger('watchdog').setLevel(logging.WARNING)
+logging.getLogger('kivy').setLevel(logging.WARNING)
+
+# Configure Kivy logging before importing other Kivy modules
+from kivy.config import Config
+Config.set('kivy', 'log_level', 'warning')
+
 from kivy.app import App
 from kivy.utils import platform
 
