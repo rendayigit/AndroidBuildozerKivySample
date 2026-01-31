@@ -9,7 +9,7 @@
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
           "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "JAVA_HOME": "${env:JAVA_HOME}"
+          "JAVA_HOME": "${env:JAVA_HOME:-/usr/lib/jvm/java-17-openjdk-amd64}"
         }
       },
       "group": {
@@ -47,7 +47,7 @@
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
           "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "JAVA_HOME": "${env:JAVA_HOME}"
+          "JAVA_HOME": "${env:JAVA_HOME:-/usr/lib/jvm/java-17-openjdk-amd64}"
         }
       },
       "presentation": {
@@ -100,12 +100,12 @@
     {
       "label": "Install & Run on Phone (Logcat)",
       "type": "shell",
-      "command": "buildozer android debug deploy run logcat",
+      "command": "buildozer android debug deploy run && adb logcat -s python:* kivydemo:*",
       "options": {
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
           "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "JAVA_HOME": "${env:JAVA_HOME}"
+          "JAVA_HOME": "${env:JAVA_HOME:-/usr/lib/jvm/java-17-openjdk-amd64}"
         }
       },
       "group": "test",

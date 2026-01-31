@@ -6,6 +6,9 @@ class AppScreenManager(ScreenManager):
 
 
 class BaseScreen(Screen):
+    def on_enter(self):
+        print(f"[KivyDemo] Opened screen: {self.name}")
+
     def go_to(self, screen_name, direction="left"):
         if self.manager:
             self.manager.transition.direction = direction

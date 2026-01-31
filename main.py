@@ -22,7 +22,20 @@ def _create_app_class():
 
         class AndroidApp(App):
             def build(self):
-                Builder.load_file("app/app.kv")
+                # Load all KV files - order matters: theme/components first, then screens, then app
+                kv_files = [
+                    "app/theme.kv",
+                    "app/components.kv",
+                    "screens/home.kv",
+                    "screens/animation.kv",
+                    "screens/widgets.kv",
+                    "screens/touch.kv",
+                    "screens/canvas.kv",
+                    "screens/about.kv",
+                    "app/app.kv",  # Load main app.kv last since it references the screens
+                ]
+                for kv_file in kv_files:
+                    Builder.load_file(kv_file)
                 return AppScreenManager()
 
         return AndroidApp
