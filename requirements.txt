@@ -1,7 +1,7 @@
-buildozer
-setuptools
-Cython==0.29.36
-sh<2.0
-kivy
-kaki
-watchdog
+buildozer>=1.5.0
+setuptools>=65.0.0
+Cython>=3.0.0
+sh>=1.14.0
+kivy>=2.3.0
+kaki>=0.1.9
+watchdog>=4.0.0

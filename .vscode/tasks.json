@@ -9,7 +9,7 @@
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
           "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+          "JAVA_HOME": "${env:JAVA_HOME}"
         }
       },
       "group": {
@@ -47,7 +47,7 @@
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
           "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+          "JAVA_HOME": "${env:JAVA_HOME}"
         }
       },
       "presentation": {
@@ -64,8 +64,7 @@
       "args": ["main.py", "-m", "screen:phone_oneplus_6t,portrait,scale=0.5"],
       "options": {
         "env": {
-          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
-          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+          "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"
         }
       },
       "group": {
@@ -87,7 +86,6 @@
       "options": {
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
-          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64",
           "DEBUG": "1" // required to enable Kaki's watcher
         }
       },
@@ -102,13 +100,12 @@
     {
       "label": "Install & Run on Phone (Logcat)",
       "type": "shell",
-      // builds (if needed), installs, opens app, and shows logs
       "command": "buildozer android debug deploy run logcat",
       "options": {
         "env": {
           "PATH": "${workspaceFolder}/.venv/bin:${env:PATH}",
           "VIRTUAL_ENV": "${workspaceFolder}/.venv",
-          "JAVA_HOME": "/usr/lib/jvm/java-17-openjdk-amd64"
+          "JAVA_HOME": "${env:JAVA_HOME}"
         }
       },
       "group": "test",
