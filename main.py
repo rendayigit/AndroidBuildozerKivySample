@@ -38,6 +38,10 @@ def _create_app_class():
                 import app
                 from screens import home, animation, widgets, touch, canvas, about
 
+                # Save current screen before reload (self persists across rebuilds)
+                if not first and hasattr(self, 'sm'):
+                    self._current_screen = self.sm.current
+
                 importlib.reload(app)
                 importlib.reload(home)
                 importlib.reload(animation)
@@ -45,7 +49,12 @@ def _create_app_class():
                 importlib.reload(touch)
                 importlib.reload(about)
                 importlib.reload(canvas)
-                return app.AppScreenManager()
+
+                self.sm = app.AppScreenManager()
+                # Restore screen after reload
+                if hasattr(self, '_current_screen'):
+                    self.sm.current = self._current_screen
+                return self.sm
 
         return DesktopApp
 
