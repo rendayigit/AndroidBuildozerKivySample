@@ -1,17 +1,5 @@
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
 
-# Theme and reusable components
-#:include app/theme.kv
-#:include app/components.kv
-
-# Screen layouts
-#:include screens/home.kv
-#:include screens/animation.kv
-#:include screens/widgets.kv
-#:include screens/touch.kv
-#:include screens/canvas.kv
-#:include screens/about.kv
-
 <AppScreenManager>:
     transition: SlideTransition(duration=0.25)
     HomeScreen:

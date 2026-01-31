@@ -1,4 +1,5 @@
 import os
+import glob
 from kivy.app import App
 from kivy.utils import platform
 
@@ -29,7 +30,7 @@ def _create_app_class():
                 "CanvasScreen": "screens.canvas",
                 "AboutScreen": "screens.about",
             }
-            KV_FILES = ["app/app.kv"]
+            KV_FILES = [p.replace(os.getcwd() + os.sep, '') for p in glob.glob('**/*.kv', recursive=True)]
             AUTORELOADER_PATHS = [(os.getcwd(), {"recursive": True})]
 
             def build_app(self, first=False):  # type: ignore[override]
