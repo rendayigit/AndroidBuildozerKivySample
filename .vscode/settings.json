@@ -11,7 +11,7 @@
     "**/.*",
     ".venv"
   ],
-  "VsCodeTaskButtons.showCounter": true,
+  "VsCodeTaskButtons.showCounter": false,
   "VsCodeTaskButtons.tasks": [
     {
       "label": "$(notebook-move-down) Build",
