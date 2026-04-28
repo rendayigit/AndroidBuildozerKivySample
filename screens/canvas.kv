@@ -5,7 +5,7 @@
 
     canvas.before:
         Color:
-            rgba: 0.06, 0.065, 0.09, 1
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
         Rectangle:
             pos: self.pos
             size: self.size
@@ -23,14 +23,14 @@
             font_size: '13sp'
             size_hint_y: None
             height: '24dp'
-            color: 0.5, 0.53, 0.6, 1
+            color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
         
         # Canvas Area with card style
         Widget:
             canvas.before:
                 # Card background
                 Color:
-                    rgba: 0.10, 0.11, 0.14, 1
+                    rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
@@ -43,7 +43,7 @@
                 
                 # Outer ring / orbit
                 Color:
-                    rgba: 0.2, 0.22, 0.28, 1
+                    rgba: app.border_color if app else (0.2, 0.22, 0.28, 1)
                 Line:
                     ellipse: self.center_x - 80, self.center_y - 80, 160, 160
                     width: 1.5

@@ -1,6 +1,21 @@
-# Kivy Android App Template
+# Kivy Sample Gallery
 
-A boilerplate for building Android apps with Python, Kivy, and Buildozer. Includes hot reload for desktop development.
+A broader Kivy reference project for building Android apps with Python, Kivy, and Buildozer. It keeps hot reload for desktop development, but the app itself is now structured as a multi-screen sample gallery rather than only a starter template.
+
+## What It Demonstrates
+
+- Buttons, labels, images, and reusable rounded components
+- Layout patterns including BoxLayout, GridLayout, AnchorLayout, and Splitter
+- Sliders, ProgressBar, Switch, Spinner, TextInput, CheckBox, and radio-button groups
+- Popups, tabs, animations, canvas drawing, touch handling, and screen navigation
+- Shared theme state and callbacks that flow between screens and back to the home dashboard
+
+## Sample Screens
+
+- Home dashboard with live callback state and theme switching
+- Components & Layouts screen with tabs, popups, images, layouts, and splitters
+- Widgets & Forms screen with controls, progress, and callback syncing
+- Animation, Touch, Canvas, and About screens for focused concept demos
 
 ## Requirements
 
@@ -52,6 +67,8 @@ pip install -r requirements.txt
 
 Use the **Run App** or **Run Hot Reload** tasks (Ctrl+Shift+P → Tasks: Run Task).
 
+The home screen shows the current theme and latest callback message, so you can trigger actions in a sample screen and immediately see the shared app state update when you return.
+
 ### Desktop (Terminal)
 
 ```bash
@@ -77,6 +94,7 @@ Make sure you have `Cython>=3.0.0` in requirements.txt (not the old 0.29.x).
 ### Java not found
 
 Ensure JAVA_HOME is set:
+
 ```bash
 export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ```
@@ -84,6 +102,7 @@ export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
 ### SDL2 errors
 
 Install SDL2 dependencies:
+
 ```bash
 sudo apt install -y libsdl2-dev libsdl2-image-dev libsdl2-mixer-dev libsdl2-ttf-dev
 ```

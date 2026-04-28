@@ -5,7 +5,7 @@
 
     canvas.before:
         Color:
-            rgba: 0.06, 0.065, 0.09, 1
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
         Rectangle:
             pos: self.pos
             size: self.size
@@ -23,7 +23,7 @@
             height: '28dp'
             text: root.touch_info
             font_size: '14sp'
-            color: 0.35, 0.55, 1.0, 1
+            color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
         
         # Touch Area with modern card style
         FloatLayout:
@@ -31,31 +31,31 @@
             canvas.before:
                 # Card background
                 Color:
-                    rgba: 0.10, 0.11, 0.14, 1
+                    rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
                 RoundedRectangle:
                     pos: self.pos
                     size: self.size
                     radius: [20]
                 # Subtle border
                 Color:
-                    rgba: 0.18, 0.19, 0.24, 1
+                    rgba: app.border_color if app else (0.18, 0.19, 0.24, 1)
                 Line:
                     rounded_rectangle: self.x, self.y, self.width, self.height, 20
                     width: 1.2
                 # Ripple effect with smoother fade
                 Color:
-                    rgba: 0.35, 0.55, 1.0, root.ripple_opacity * 0.4
+                    rgba: (app.primary_color[0], app.primary_color[1], app.primary_color[2], root.ripple_opacity * 0.4) if app else (0.35, 0.55, 1.0, root.ripple_opacity * 0.4)
                 Ellipse:
                     pos: root.touch_x - root.ripple_size/2, root.touch_y - root.ripple_size/2
                     size: root.ripple_size, root.ripple_size
                 # Touch indicator with glow
                 Color:
-                    rgba: 0.55, 0.85, 0.65, 0.3
+                    rgba: (app.accent_color[0], app.accent_color[1], app.accent_color[2], 0.3) if app else (0.55, 0.85, 0.65, 0.3)
                 Ellipse:
                     pos: root.touch_x - 24, root.touch_y - 24
                     size: 48, 48
                 Color:
-                    rgba: 0.55, 0.85, 0.65, 0.9
+                    rgba: app.accent_color if app else (0.55, 0.85, 0.65, 0.9)
                 Ellipse:
                     pos: root.touch_x - 12, root.touch_y - 12
                     size: 24, 24
@@ -67,7 +67,7 @@
             Label:
                 text: "Tap anywhere in this area"
                 font_size: '13sp'
-                color: 0.4, 0.43, 0.5, 1
+                color: app.text_muted_color if app else (0.4, 0.43, 0.5, 1)
                 pos_hint: {'center_x': 0.5, 'center_y': 0.5}
 
         BoxLayout:
@@ -79,7 +79,7 @@
                 padding: '16dp', '0dp'
                 canvas.before:
                     Color:
-                        rgba: 0.10, 0.11, 0.14, 1
+                        rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
                     RoundedRectangle:
                         pos: self.pos
                         size: self.size
@@ -88,11 +88,11 @@
                     text: f"Touches: {root.touch_count}"
                     font_size: '15sp'
                     bold: True
-                    color: 0.95, 0.96, 0.98, 1
+                    color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
 
             ModernButton:
                 text: "Reset"
-                btn_color: 0.85, 0.35, 0.40, 1
+                btn_color: app.danger_color if app else (0.85, 0.35, 0.40, 1)
                 on_release: root.reset_touches()
 
     BackButton:

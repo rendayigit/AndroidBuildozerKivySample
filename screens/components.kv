@@ -1,0 +1,436 @@
+# Components Screen - Buttons, layouts, tabs, popups, images, and callbacks
+
+<ComponentsScreen>:
+    name: 'components'
+
+    canvas.before:
+        Color:
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '24dp', '60dp', '24dp', '24dp'
+        spacing: '12dp'
+
+        ScreenTitle:
+            text: 'Components & Layouts'
+
+        Label:
+            text: 'Tabs, rounded buttons, popups, layouts, splitters, labels, images, themes, and callbacks between screens.'
+            font_size: '13sp'
+            size_hint_y: None
+            height: '40dp'
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.width, None
+            color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+        Card:
+            height: '104dp'
+
+            SectionLabel:
+                text: 'CURRENT SAMPLE STATE'
+
+            Label:
+                text: root.action_summary
+                font_size: '15sp'
+                bold: True
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.width, None
+                color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+            Label:
+                text: f"Theme: {root.theme_preview} | Popups confirmed: {root.popup_count}"
+                font_size: '12sp'
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.width, None
+                color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+        TabbedPanel:
+            do_default_tab: False
+            tab_height: '42dp'
+            tab_width: '120dp'
+
+            TabbedPanelItem:
+                text: 'Buttons'
+                background_normal: ''
+                background_down: ''
+                background_color: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+                color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+                on_state: if self.state == 'down': root.select_tab('buttons')
+
+                ScrollView:
+                    do_scroll_x: False
+                    bar_width: 0
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        spacing: '12dp'
+                        padding: '8dp', '12dp', '8dp', '12dp'
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        Card:
+                            height: '130dp'
+
+                            BoxLayout:
+                                spacing: '12dp'
+
+                                Image:
+                                    source: 'assets/icons/logo_kivy_white.png'
+                                    size_hint_x: None
+                                    width: '84dp'
+
+                                BoxLayout:
+                                    orientation: 'vertical'
+                                    spacing: '4dp'
+
+                                    SectionLabel:
+                                        text: 'IMAGE + LABELS'
+
+                                    Label:
+                                        text: 'Images can sit beside labels and buttons inside the same card.'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.width, None
+                                        color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+                                    Label:
+                                        text: 'This screen also uses tabs and custom reusable components.'
+                                        font_size: '12sp'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.width, None
+                                        color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: '50dp'
+                            spacing: '10dp'
+
+                            ModernButton:
+                                text: 'Primary'
+                                on_release: root.choose_button_style('Primary')
+
+                            ModernButton:
+                                text: 'Accent'
+                                btn_color: app.accent_color if app else (0.55, 0.85, 0.65, 1)
+                                on_release: root.choose_button_style('Accent')
+
+                            SecondaryButton:
+                                text: 'Outline'
+                                on_release: root.choose_button_style('Outline')
+
+                        Card:
+                            height: '126dp'
+
+                            SectionLabel:
+                                text: 'RADIO GROUP FOR BUTTON STYLES'
+
+                            BoxLayout:
+                                size_hint_y: None
+                                height: '36dp'
+                                spacing: '10dp'
+
+                                BoxLayout:
+                                    spacing: '6dp'
+                                    CheckBox:
+                                        group: 'component-style'
+                                        active: root.button_style == 'Primary'
+                                        on_active: if self.active: root.choose_button_style('Primary')
+                                    Label:
+                                        text: 'Primary'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.size
+                                        color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                                BoxLayout:
+                                    spacing: '6dp'
+                                    CheckBox:
+                                        group: 'component-style'
+                                        active: root.button_style == 'Accent'
+                                        on_active: if self.active: root.choose_button_style('Accent')
+                                    Label:
+                                        text: 'Accent'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.size
+                                        color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                                BoxLayout:
+                                    spacing: '6dp'
+                                    CheckBox:
+                                        group: 'component-style'
+                                        active: root.button_style == 'Outline'
+                                        on_active: if self.active: root.choose_button_style('Outline')
+                                    Label:
+                                        text: 'Outline'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.size
+                                        color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                            Label:
+                                text: f"Selected style: {root.button_style}"
+                                font_size: '13sp'
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.width, None
+                                color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: '50dp'
+                            spacing: '10dp'
+
+                            ModernButton:
+                                text: 'Show Popup'
+                                on_release: root.show_sample_popup()
+
+                            SecondaryButton:
+                                text: 'Send Callback Home'
+                                on_release: root.send_callback_home()
+
+            TabbedPanelItem:
+                text: 'Layouts'
+                background_normal: ''
+                background_down: ''
+                background_color: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+                color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+                on_state: if self.state == 'down': root.select_tab('layouts')
+
+                ScrollView:
+                    do_scroll_x: False
+                    bar_width: 0
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        spacing: '12dp'
+                        padding: '8dp', '12dp', '8dp', '12dp'
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        Card:
+                            height: '112dp'
+
+                            SectionLabel:
+                                text: 'LAYOUT NOTES'
+
+                            Label:
+                                text: f"Current focus: {root.selected_layout}"
+                                font_size: '16sp'
+                                bold: True
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.width, None
+                                color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+                            Label:
+                                text: 'BoxLayout stacks items, GridLayout forms rows and columns, and AnchorLayout pins content to an edge.'
+                                font_size: '13sp'
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.width, None
+                                color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: '50dp'
+                            spacing: '10dp'
+
+                            SecondaryButton:
+                                text: 'BoxLayout'
+                                on_release: root.choose_layout('BoxLayout')
+
+                            SecondaryButton:
+                                text: 'GridLayout'
+                                on_release: root.choose_layout('GridLayout')
+
+                            SecondaryButton:
+                                text: 'AnchorLayout'
+                                on_release: root.choose_layout('AnchorLayout')
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: '250dp'
+                            spacing: '12dp'
+
+                            Splitter:
+                                sizable_from: 'right'
+                                min_size: '160dp'
+                                max_size: '260dp'
+                                size_hint_x: None
+                                width: '192dp'
+
+                                BoxLayout:
+                                    orientation: 'vertical'
+                                    padding: '16dp'
+                                    spacing: '8dp'
+                                    canvas.before:
+                                        Color:
+                                            rgba: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+                                        RoundedRectangle:
+                                            pos: self.pos
+                                            size: self.size
+                                            radius: [16]
+
+                                    SectionLabel:
+                                        text: 'SPLITTER PANEL'
+
+                                    Label:
+                                        text: 'Drag the splitter handle to resize this column.'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.width, None
+                                        color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+                                    Label:
+                                        text: f"Focused layout: {root.selected_layout}"
+                                        font_size: '12sp'
+                                        halign: 'left'
+                                        valign: 'middle'
+                                        text_size: self.width, None
+                                        color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+
+                            BoxLayout:
+                                orientation: 'vertical'
+                                padding: '14dp'
+                                spacing: '10dp'
+                                canvas.before:
+                                    Color:
+                                        rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
+                                    RoundedRectangle:
+                                        pos: self.pos
+                                        size: self.size
+                                        radius: [16]
+
+                                SectionLabel:
+                                    text: 'LAYOUT PREVIEW'
+
+                                BoxLayout:
+                                    size_hint_y: None
+                                    height: '48dp'
+                                    spacing: '8dp'
+
+                                    ModernButton:
+                                        text: 'Row'
+                                        btn_color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+
+                                    ModernButton:
+                                        text: 'In'
+                                        btn_color: app.accent_color if app else (0.55, 0.85, 0.65, 1)
+
+                                    SecondaryButton:
+                                        text: 'BoxLayout'
+
+                                GridLayout:
+                                    cols: 2
+                                    size_hint_y: None
+                                    height: '82dp'
+                                    spacing: '8dp'
+
+                                    InfoTile:
+                                        title: 'GRID'
+                                        value: '2 x 2'
+                                        note: 'Even cells'
+
+                                    InfoTile:
+                                        title: 'SPACE'
+                                        value: 'dp'
+                                        note: 'Predictable sizing'
+
+                                AnchorLayout:
+                                    anchor_x: 'right'
+                                    anchor_y: 'bottom'
+
+                                    SecondaryButton:
+                                        text: 'Anchored Action'
+                                        size_hint: None, None
+                                        size: '150dp', '46dp'
+
+            TabbedPanelItem:
+                text: 'Feedback'
+                background_normal: ''
+                background_down: ''
+                background_color: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+                color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+                on_state: if self.state == 'down': root.select_tab('feedback')
+
+                ScrollView:
+                    do_scroll_x: False
+                    bar_width: 0
+
+                    BoxLayout:
+                        orientation: 'vertical'
+                        spacing: '12dp'
+                        padding: '8dp', '12dp', '8dp', '12dp'
+                        size_hint_y: None
+                        height: self.minimum_height
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: '92dp'
+                            spacing: '10dp'
+
+                            InfoTile:
+                                title: 'THEME'
+                                value: root.theme_preview
+                                note: 'Shared app palette'
+
+                            InfoTile:
+                                title: 'POPUPS'
+                                value: str(root.popup_count)
+                                note: 'Confirmed actions'
+
+                        Card:
+                            height: '150dp'
+
+                            SectionLabel:
+                                text: 'CALLBACKS BACK TO HOME'
+
+                            Label:
+                                text: f"Latest sample on home: {app.selected_demo}" if app else 'Latest sample on home: Home'
+                                font_size: '15sp'
+                                bold: True
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.width, None
+                                color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+                            Label:
+                                text: app.status_message if app else 'Callbacks appear on the home dashboard.'
+                                font_size: '13sp'
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.width, None
+                                color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                            Label:
+                                text: 'Use the buttons below to switch the palette or push a status back to the dashboard.'
+                                font_size: '12sp'
+                                halign: 'left'
+                                valign: 'middle'
+                                text_size: self.width, None
+                                color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+                        BoxLayout:
+                            size_hint_y: None
+                            height: '50dp'
+                            spacing: '10dp'
+
+                            ModernButton:
+                                text: 'Cycle Theme'
+                                on_release: root.cycle_theme_demo()
+
+                            SecondaryButton:
+                                text: 'Send Callback Home'
+                                on_release: root.send_callback_home()
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

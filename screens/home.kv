@@ -4,82 +4,176 @@
     name: 'home'
 
     canvas.before:
-        # Deep navy gradient background
         Color:
-            rgba: 0.06, 0.065, 0.09, 1
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
         Rectangle:
             pos: self.pos
             size: self.size
-        # Subtle top gradient glow
         Color:
-            rgba: 0.35, 0.55, 1.0, 0.03
+            rgba: (app.primary_color[0], app.primary_color[1], app.primary_color[2], 0.08) if app else (0.35, 0.55, 1.0, 0.08)
         Rectangle:
-            pos: self.x, self.y + self.height * 0.6
-            size: self.width, self.height * 0.4
+            pos: self.x, self.y + self.height * 0.58
+            size: self.width, self.height * 0.42
 
-    BoxLayout:
-        orientation: 'vertical'
-        padding: '24dp', '40dp', '24dp', '24dp'
-        spacing: '12dp'
+    ScrollView:
+        do_scroll_x: False
+        bar_width: 0
 
-        # App Logo / Icon area
-        Image:
-            source: 'assets/icons/logo_kivy_white.png'
-            size_hint: None, None
-            size: '70dp', '70dp'
-            pos_hint: {'center_x': 0.5}
-
-        Label:
-            text: "Kivy Demo"
-            font_size: '34sp'
-            bold: True
+        BoxLayout:
+            orientation: 'vertical'
+            padding: '24dp', '36dp', '24dp', '24dp'
+            spacing: '14dp'
             size_hint_y: None
-            height: '50dp'
-            color: 0.95, 0.96, 0.98, 1
+            height: self.minimum_height
 
-        Label:
-            text: "Modern Android App Template"
-            font_size: '14sp'
-            size_hint_y: None
-            height: '24dp'
-            color: 0.5, 0.53, 0.6, 1
+            BoxLayout:
+                orientation: 'vertical'
+                size_hint_y: None
+                height: self.minimum_height
+                padding: '20dp'
+                spacing: '12dp'
+                canvas.before:
+                    Color:
+                        rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
+                    RoundedRectangle:
+                        pos: self.pos
+                        size: self.size
+                        radius: [22]
+                    Color:
+                        rgba: app.border_color if app else (0.18, 0.19, 0.24, 1)
+                    Line:
+                        rounded_rectangle: self.x, self.y, self.width, self.height, 22
+                        width: 1.1
 
-        Widget:
-            size_hint_y: None
-            height: '28dp'
+                Image:
+                    source: 'assets/icons/logo_kivy_white.png'
+                    size_hint: None, None
+                    size: '72dp', '72dp'
+                    pos_hint: {'center_x': 0.5}
 
-        NavButton:
-            icon: 'assets/icons/animation.png'
-            text: "Animations"
-            on_release: root.go_to('animation')
+                Label:
+                    text: 'Kivy Sample Gallery'
+                    font_size: '32sp'
+                    bold: True
+                    size_hint_y: None
+                    height: '42dp'
+                    color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
 
-        NavButton:
-            icon: 'assets/icons/widgets.png'
-            text: "Widgets"
-            on_release: root.go_to('widgets')
+                Label:
+                    text: 'A broader reference app for buttons, layouts, forms, popups, tabs, splitters, callbacks, themes, and animation.'
+                    font_size: '13sp'
+                    halign: 'center'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
 
-        NavButton:
-            icon: 'assets/icons/touch.png'
-            text: "Touch & Gestures"
-            on_release: root.go_to('touch')
+                BoxLayout:
+                    size_hint_y: None
+                    height: '92dp'
+                    spacing: '10dp'
 
-        NavButton:
-            icon: 'assets/icons/canvas.png'
-            text: "Canvas Drawing"
-            on_release: root.go_to('canvas')
+                    InfoTile:
+                        title: 'THEME'
+                        value: app.theme_label if app else 'Midnight'
+                        note: 'Runtime palette'
 
-        NavButton:
-            icon: 'assets/icons/info.png'
-            text: "About"
-            on_release: root.go_to('about')
+                    InfoTile:
+                        title: 'CALLBACKS'
+                        value: str(app.callback_count) if app else '0'
+                        note: 'Cross-screen events'
 
-        Widget:
-            size_hint_y: 1
+                BoxLayout:
+                    size_hint_y: None
+                    height: '50dp'
+                    spacing: '10dp'
 
-        # Footer version indicator
-        Label:
-            text: "v1.0.0"
-            font_size: '11sp'
-            size_hint_y: None
-            height: '20dp'
-            color: 0.35, 0.38, 0.45, 1
+                    ModernButton:
+                        text: 'Cycle Theme'
+                        on_release: root.cycle_theme()
+
+                    SecondaryButton:
+                        text: 'Reset Status'
+                        on_release: root.clear_status()
+
+            Card:
+                SectionLabel:
+                    text: 'LIVE CALLBACK STATE'
+
+                Label:
+                    text: f"Latest sample: {app.selected_demo}" if app else 'Latest sample: Home'
+                    size_hint_y: None
+                    height: '24dp'
+                    font_size: '14sp'
+                    bold: True
+                    color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+                    halign: 'left'
+                    text_size: self.width, None
+
+                Label:
+                    text: f"{app.status_source.title()}: {app.status_message}" if app else 'Home: Ready to explore samples.'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    font_size: '14sp'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                Label:
+                    text: 'Open a sample, trigger an interaction, then come back here to see the callback state.'
+                    size_hint_y: None
+                    height: self.texture_size[1]
+                    font_size: '12sp'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+            SectionLabel:
+                text: 'SAMPLE SCREENS'
+
+            NavButton:
+                icon: 'assets/icons/logo_kivy_white.png'
+                badge_color: app.accent_color if app else (0.55, 0.85, 0.65, 1)
+                text: 'Components, Layouts & Popups'
+                subtitle: 'tabs, popups, splitters, and reusable buttons'
+                on_release: root.open_demo('components', 'Components')
+
+            NavButton:
+                icon: 'assets/icons/animation.png'
+                text: 'Animations'
+                subtitle: 'motion, transforms, and idle states'
+                on_release: root.open_demo('animation', 'Animations')
+
+            NavButton:
+                icon: 'assets/icons/widgets.png'
+                text: 'Widgets, Forms & Progress'
+                subtitle: 'sliders, switches, inputs, and callbacks'
+                on_release: root.open_demo('widgets', 'Widgets')
+
+            NavButton:
+                icon: 'assets/icons/touch.png'
+                text: 'Touch & Gestures'
+                subtitle: 'tap feedback, ripple effects, and counters'
+                on_release: root.open_demo('touch', 'Touch')
+
+            NavButton:
+                icon: 'assets/icons/canvas.png'
+                text: 'Canvas Drawing'
+                subtitle: 'custom shapes, rotation, and color changes'
+                on_release: root.open_demo('canvas', 'Canvas')
+
+            NavButton:
+                icon: 'assets/icons/info.png'
+                text: 'About'
+                subtitle: 'project summary and sample coverage'
+                on_release: root.open_demo('about', 'About')
+
+            Label:
+                text: 'v1.2.0'
+                font_size: '11sp'
+                size_hint_y: None
+                height: '20dp'
+                color: app.text_muted_color if app else (0.35, 0.38, 0.45, 1)

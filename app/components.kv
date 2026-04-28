@@ -6,45 +6,89 @@
 # Navigation button for home screen menu
 <NavButton@ButtonBehavior+BoxLayout>:
     size_hint_y: None
-    height: '62dp'
-    spacing: '16dp'
+    height: '74dp'
+    spacing: '14dp'
     padding: '16dp', '0dp'
     icon: ''
+    icon_text: ''
     text: ''
+    subtitle: ''
+    badge_color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
     canvas.before:
         Color:
-            rgba: 0.12, 0.13, 0.17, 1
+            rgba: app.surface_color if app else (0.12, 0.13, 0.17, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [16]
         # Subtle top highlight
         Color:
-            rgba: 0.35, 0.55, 1.0, 0.15
+            rgba: (app.primary_color[0], app.primary_color[1], app.primary_color[2], 0.16) if app else (0.35, 0.55, 1.0, 0.16)
         RoundedRectangle:
             pos: self.x, self.y + self.height - 2
             size: self.width, 2
             radius: [16, 16, 0, 0]
         # Left accent bar
         Color:
-            rgba: 0.35, 0.55, 1.0, 0.9
+            rgba: app.primary_color if app else (0.35, 0.55, 1.0, 0.9)
         RoundedRectangle:
             pos: self.x, self.y + 12
             size: 4, self.height - 24
             radius: [2]
-    Image:
-        source: root.icon
-        size_hint_x: None
-        width: '28dp'
-        opacity: 0.9
-    Label:
-        text: root.text
-        bold: True
-        font_size: '17sp'
-        halign: 'left'
-        text_size: self.size
-        valign: 'center'
-        color: 0.95, 0.96, 0.98, 1
+    BoxLayout:
+        size_hint: None, None
+        size: '44dp', '44dp'
+        pos_hint: {'center_y': 0.5}
+        canvas.before:
+            Color:
+                rgba: root.badge_color if root.badge_color else (0.35, 0.55, 1.0, 1)
+            RoundedRectangle:
+                pos: self.pos
+                size: self.size
+                radius: [12]
+            Color:
+                rgba: (1, 1, 1, 0.12)
+            RoundedRectangle:
+                pos: self.x, self.y + self.height - 2
+                size: self.width, 2
+                radius: [12, 12, 0, 0]
+
+        AnchorLayout:
+            Image:
+                source: root.icon
+                opacity: 0.92 if root.icon else 0
+                size_hint: (0.6, 0.6) if root.icon else (None, None)
+                size: (0, 0) if not root.icon else self.size
+
+            Label:
+                text: root.icon_text
+                opacity: 1 if root.icon_text else 0
+                bold: True
+                font_size: '18sp'
+                halign: 'center'
+                valign: 'middle'
+                color: 1, 1, 1, 1
+
+    BoxLayout:
+        orientation: 'vertical'
+        spacing: '2dp'
+
+        Label:
+            text: root.text
+            bold: True
+            font_size: '17sp'
+            halign: 'left'
+            text_size: self.size
+            valign: 'middle'
+            color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+        Label:
+            text: root.subtitle
+            font_size: '12sp'
+            halign: 'left'
+            valign: 'middle'
+            text_size: self.size
+            color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
 
 # Back button for secondary screens
 <BackButton@Button>:
@@ -55,22 +99,22 @@
     background_normal: ''
     background_color: 0, 0, 0, 0
     font_size: '14sp'
-    color: 0.75, 0.77, 0.82, 1
+    color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
     canvas.before:
         Color:
-            rgba: 0.10, 0.11, 0.14, 1
+            rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [12]
         Color:
-            rgba: 0.18, 0.19, 0.24, 1
+            rgba: app.border_color if app else (0.18, 0.19, 0.24, 1)
         Line:
             rounded_rectangle: self.x, self.y, self.width, self.height, 12
             width: 1
     canvas:
         Color:
-            rgba: 0.5, 0.53, 0.6, 1
+            rgba: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
         Line:
             points: [self.x + 18, self.center_y, self.x + 24, self.center_y + 5, self.x + 24, self.center_y - 5, self.x + 18, self.center_y]
             width: 1.2
@@ -83,7 +127,7 @@
     height: '56dp'
     font_size: '26sp'
     bold: True
-    color: 0.95, 0.96, 0.98, 1
+    color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
 
 # Section label for grouping content
 <SectionLabel@Label>:
@@ -91,7 +135,7 @@
     height: '28dp'
     font_size: '12sp'
     bold: True
-    color: 0.5, 0.53, 0.6, 1
+    color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
     halign: 'left'
     text_size: self.size
 
@@ -101,17 +145,83 @@
     background_color: 0, 0, 0, 0
     font_size: '15sp'
     bold: True
-    color: 0.95, 0.96, 0.98, 1
+    color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
     size_hint_y: None
     height: '50dp'
-    btn_color: 0.35, 0.55, 1.0, 1
+    btn_color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
     canvas.before:
         Color:
-            rgba: self.btn_color
+            rgba: self.btn_color if self.btn_color else (0.35, 0.55, 1.0, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [12]
+
+<SecondaryButton@Button>:
+    background_normal: ''
+    background_color: 0, 0, 0, 0
+    font_size: '14sp'
+    bold: True
+    color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+    size_hint_y: None
+    height: '50dp'
+    canvas.before:
+        Color:
+            rgba: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [12]
+        Color:
+            rgba: app.border_color if app else (0.18, 0.19, 0.24, 1)
+        Line:
+            rounded_rectangle: self.x, self.y, self.width, self.height, 12
+            width: 1.1
+
+<InfoTile@BoxLayout>:
+    title: ''
+    value: ''
+    note: ''
+    orientation: 'vertical'
+    padding: '12dp'
+    spacing: '2dp'
+    size_hint_y: None
+    height: '92dp'
+    canvas.before:
+        Color:
+            rgba: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [14]
+    Label:
+        text: root.title
+        size_hint_y: None
+        height: '18dp'
+        font_size: '11sp'
+        bold: True
+        halign: 'left'
+        text_size: self.size
+        color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+    Label:
+        text: root.value
+        size_hint_y: None
+        height: '32dp'
+        font_size: '22sp'
+        bold: True
+        halign: 'left'
+        text_size: self.size
+        valign: 'middle'
+        color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+    Label:
+        text: root.note
+        size_hint_y: None
+        height: '16dp'
+        font_size: '12sp'
+        halign: 'left'
+        text_size: self.size
+        valign: 'bottom'
+        color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
 
 # Card container with surface background
 <Card@BoxLayout>:
@@ -119,14 +229,19 @@
     padding: '18dp'
     spacing: '10dp'
     size_hint_y: None
-    height: '100dp'
+    height: self.minimum_height
     canvas.before:
         Color:
-            rgba: 0.10, 0.11, 0.14, 1
+            rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
         RoundedRectangle:
             pos: self.pos
             size: self.size
             radius: [16]
+        Color:
+            rgba: app.border_color if app else (0.18, 0.19, 0.24, 1)
+        Line:
+            rounded_rectangle: self.x, self.y, self.width, self.height, 16
+            width: 1.0
 
 # Standard screen background (use in canvas.before)
 # Usage: Apply to screen's canvas.before for consistent background
