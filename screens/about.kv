@@ -1,0 +1,82 @@
+# About Screen - App information and credits
+
+<AboutScreen>:
+    name: 'about'
+
+    canvas.before:
+        Color:
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    ScrollView:
+        do_scroll_x: False
+        bar_width: 0
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: '24dp', '60dp', '24dp', '24dp'
+            spacing: '16dp'
+            size_hint_y: None
+            height: self.minimum_height
+
+            Image:
+                source: 'assets/icons/logo_kivy_white.png'
+                size_hint: None, None
+                size: '90dp', '90dp'
+                pos_hint: {'center_x': 0.5}
+
+            ScreenTitle:
+                text: 'Kivy Sample Gallery'
+
+            Label:
+                text: root.version
+                font_size: '14sp'
+                size_hint_y: None
+                height: '24dp'
+                color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+
+            BoxLayout:
+                size_hint_y: None
+                height: '92dp'
+                spacing: '10dp'
+
+                InfoTile:
+                    title: 'SCREENS'
+                    value: '7'
+                    note: 'Multi-screen navigation'
+
+                InfoTile:
+                    title: 'THEME'
+                    value: app.theme_label if app else 'Midnight'
+                    note: 'Shared palette'
+
+            Card:
+                height: '332dp'
+
+                Label:
+                    text: root.description
+                    font_size: '14sp'
+                    halign: 'center'
+                    valign: 'top'
+                    text_size: self.size
+                    color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+                    line_height: 1.5
+
+            Label:
+                text: 'Built with Python + Kivy'
+                font_size: '12sp'
+                size_hint_y: None
+                height: '20dp'
+                color: app.text_muted_color if app else (0.4, 0.43, 0.5, 1)
+
+            Label:
+                text: 'Open Source'
+                font_size: '11sp'
+                size_hint_y: None
+                height: '18dp'
+                color: app.text_muted_color if app else (0.35, 0.38, 0.45, 1)
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

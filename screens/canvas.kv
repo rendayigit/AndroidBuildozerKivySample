@@ -1,0 +1,101 @@
+# Canvas Demo Screen - Showcases canvas drawing capabilities
+
+<CanvasScreen>:
+    name: 'canvas'
+
+    canvas.before:
+        Color:
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '24dp', '60dp', '24dp', '24dp'
+        spacing: '16dp'
+
+        ScreenTitle:
+            text: "Canvas Drawing"
+        
+        Label:
+            text: "Vector graphics & shapes"
+            font_size: '13sp'
+            size_hint_y: None
+            height: '24dp'
+            color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+        
+        # Canvas Area with card style
+        Widget:
+            canvas.before:
+                # Card background
+                Color:
+                    rgba: app.surface_color if app else (0.10, 0.11, 0.14, 1)
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+
+                PushMatrix
+                Rotate:
+                    angle: root.shape_rotation
+                    origin: self.center
+                
+                # Outer ring / orbit
+                Color:
+                    rgba: app.border_color if app else (0.2, 0.22, 0.28, 1)
+                Line:
+                    ellipse: self.center_x - 80, self.center_y - 80, 160, 160
+                    width: 1.5
+                
+                # Circle with glow
+                Color:
+                    rgba: root.shape_color[0], root.shape_color[1], root.shape_color[2], 0.2
+                Ellipse:
+                    pos: self.center_x - 55, self.center_y - 55
+                    size: 110, 110
+                Color:
+                    rgba: root.shape_color
+                Ellipse:
+                    pos: self.center_x - 45, self.center_y - 45
+                    size: 90, 90
+                
+                # Rectangle outline with rounded corners
+                Color:
+                    rgba: 1, 0.6, 0.35, 0.7
+                Line:
+                    rounded_rectangle: self.center_x - 65, self.center_y - 65, 130, 130, 12
+                    width: 2.5
+                
+                # Triangle with gradient-like effect
+                Color:
+                    rgba: 0.35, 0.95, 0.6, 0.5
+                Triangle:
+                    points: self.center_x, self.center_y + 70, self.center_x - 55, self.center_y - 35, self.center_x + 55, self.center_y - 35
+                Color:
+                    rgba: 0.35, 0.95, 0.6, 0.8
+                Line:
+                    points: [self.center_x, self.center_y + 70, self.center_x - 55, self.center_y - 35, self.center_x + 55, self.center_y - 35, self.center_x, self.center_y + 70]
+                    width: 2
+                    cap: 'round'
+                    joint: 'round'
+
+                PopMatrix
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '12dp'
+
+            ModernButton:
+                text: "Random Color"
+                btn_color: root.shape_color
+                on_release: root.randomize_color()
+
+            ModernButton:
+                text: "Rotate"
+                btn_color: 0.35, 0.55, 1.0, 1
+                on_release: root.rotate_shape()
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

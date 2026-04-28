@@ -1,0 +1,254 @@
+# Widget Demo Screen - Showcases various Kivy widgets
+
+<WidgetsScreen>:
+    name: 'widgets'
+
+    canvas.before:
+        Color:
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    ScrollView:
+        do_scroll_x: False
+        bar_width: 0
+
+        BoxLayout:
+            orientation: 'vertical'
+            padding: '24dp', '60dp', '24dp', '24dp'
+            spacing: '12dp'
+            size_hint_y: None
+            height: self.minimum_height
+
+            ScreenTitle:
+                text: 'Widgets & Forms'
+
+            Label:
+                text: 'Sliders, progress bars, switches, spinners, text input, checkboxes, radio buttons, and shared callbacks.'
+                font_size: '13sp'
+                size_hint_y: None
+                height: '40dp'
+                halign: 'left'
+                valign: 'middle'
+                text_size: self.width, None
+                color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+            Card:
+                height: '104dp'
+
+                SectionLabel:
+                    text: 'STATUS'
+
+                Label:
+                    text: root.status_text
+                    font_size: '16sp'
+                    bold: True
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+                Label:
+                    text: f"Theme: {app.theme_label} | Radio: {root.radio_choice}"
+                    font_size: '12sp'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+            Card:
+                height: '138dp'
+
+                SectionLabel:
+                    text: 'SLIDER + LABEL'
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: '40dp'
+                    spacing: '16dp'
+
+                    Slider:
+                        min: 0
+                        max: 100
+                        step: 5
+                        value: root.slider_value
+                        on_value: root.on_slider_change(self.value)
+                        cursor_size: '24dp', '24dp'
+                        value_track: True
+                        value_track_color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+
+                    Label:
+                        size_hint_x: None
+                        width: '54dp'
+                        text: f"{root.slider_value:.0f}%"
+                        font_size: '17sp'
+                        bold: True
+                        color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+
+                SecondaryButton:
+                    text: 'Sync Slider To ProgressBar'
+                    on_release: root.sync_progress()
+
+            Card:
+                height: '124dp'
+
+                SectionLabel:
+                    text: 'PROGRESSBAR'
+
+                ProgressBar:
+                    max: 100
+                    value: root.progress_value
+
+                Label:
+                    text: f"{root.progress_value:.0f}% complete. It loops automatically until you sync the slider."
+                    font_size: '13sp'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+            Card:
+                height: '118dp'
+
+                SectionLabel:
+                    text: 'SWITCH + SPINNER'
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: '46dp'
+                    spacing: '12dp'
+
+                    Switch:
+                        active: root.switch_state
+                        on_active: root.on_switch_change(self.active)
+                        size_hint_x: None
+                        width: '80dp'
+
+                    Spinner:
+                        text: root.spinner_text
+                        values: ['Option A', 'Option B', 'Option C', 'Python', 'Kivy', 'Android']
+                        on_text: root.on_spinner_select(self.text)
+                        background_normal: ''
+                        background_color: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+                        color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+
+                Label:
+                    text: 'Combine binary state and pick-lists for compact mobile forms.'
+                    font_size: '12sp'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+            Card:
+                height: '146dp'
+
+                SectionLabel:
+                    text: 'TEXT INPUT + CHECKBOX'
+
+                TextInput:
+                    size_hint_y: None
+                    height: '46dp'
+                    hint_text: 'Type something to update the status line'
+                    hint_text_color: app.text_muted_color if app else (0.4, 0.43, 0.5, 1)
+                    multiline: False
+                    on_text: root.on_text_change(self.text)
+                    background_normal: ''
+                    background_active: ''
+                    background_color: app.surface_alt_color if app else (0.14, 0.15, 0.19, 1)
+                    foreground_color: app.text_primary_color if app else (0.95, 0.96, 0.98, 1)
+                    cursor_color: app.primary_color if app else (0.35, 0.55, 1.0, 1)
+                    padding: ['16dp', '12dp']
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: '32dp'
+                    spacing: '10dp'
+
+                    CheckBox:
+                        active: root.checkbox_state
+                        size_hint: None, None
+                        size: '28dp', '28dp'
+                        on_active: root.on_checkbox_change(self.active)
+
+                    Label:
+                        text: 'Mirror this form state back to the home dashboard'
+                        halign: 'left'
+                        valign: 'middle'
+                        text_size: self.size
+                        color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+            Card:
+                height: '142dp'
+
+                SectionLabel:
+                    text: 'RADIO BUTTONS'
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: '36dp'
+                    spacing: '10dp'
+
+                    BoxLayout:
+                        spacing: '6dp'
+                        CheckBox:
+                            group: 'widget-radio'
+                            active: root.radio_choice == 'Kivy'
+                            on_active: if self.active: root.on_radio_select('Kivy')
+                        Label:
+                            text: 'Kivy'
+                            halign: 'left'
+                            text_size: self.size
+                            valign: 'middle'
+                            color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                    BoxLayout:
+                        spacing: '6dp'
+                        CheckBox:
+                            group: 'widget-radio'
+                            active: root.radio_choice == 'Android'
+                            on_active: if self.active: root.on_radio_select('Android')
+                        Label:
+                            text: 'Android'
+                            halign: 'left'
+                            text_size: self.size
+                            valign: 'middle'
+                            color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                    BoxLayout:
+                        spacing: '6dp'
+                        CheckBox:
+                            group: 'widget-radio'
+                            active: root.radio_choice == 'Desktop'
+                            on_active: if self.active: root.on_radio_select('Desktop')
+                        Label:
+                            text: 'Desktop'
+                            halign: 'left'
+                            text_size: self.size
+                            valign: 'middle'
+                            color: app.text_secondary_color if app else (0.75, 0.77, 0.82, 1)
+
+                Label:
+                    text: 'Grouped checkboxes are the standard Kivy radio-button pattern.'
+                    font_size: '12sp'
+                    halign: 'left'
+                    valign: 'middle'
+                    text_size: self.width, None
+                    color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+            BoxLayout:
+                size_hint_y: None
+                height: '50dp'
+                spacing: '12dp'
+
+                ModernButton:
+                    text: 'Send Status Home'
+                    on_release: root.send_status_home()
+
+                SecondaryButton:
+                    text: 'Cycle Theme'
+                    on_release: root.cycle_theme()
+
+    BackButton:
+        on_release: root.go_to('home', 'right')

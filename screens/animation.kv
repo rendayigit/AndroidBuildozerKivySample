@@ -1,0 +1,108 @@
+# Animation Demo Screen - Showcases various animation types
+
+<AnimationScreen>:
+    name: 'animation'
+
+    canvas.before:
+        Color:
+            rgba: app.bg_color if app else (0.06, 0.065, 0.09, 1)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    FloatLayout:
+        # Animated Box with glow effect
+        Widget:
+            size_hint: None, None
+            size: '90dp', '90dp'
+            pos_hint: {'center_x': root.box_x, 'center_y': root.box_y}
+            canvas.before:
+                PushMatrix
+                Rotate:
+                    angle: root.rotation_angle
+                    origin: self.center
+                Scale:
+                    x: root.scale_factor
+                    y: root.scale_factor
+                    origin: self.center
+                # Outer glow
+                Color:
+                    rgba: root.box_color[0], root.box_color[1], root.box_color[2], 0.2
+                RoundedRectangle:
+                    pos: self.x - 8, self.y - 8
+                    size: self.width + 16, self.height + 16
+                    radius: [24]
+                # Main shape
+                Color:
+                    rgba: root.box_color
+                RoundedRectangle:
+                    pos: self.pos
+                    size: self.size
+                    radius: [20]
+                # Inner highlight
+                Color:
+                    rgba: 1, 1, 1, 0.15
+                RoundedRectangle:
+                    pos: self.x + 4, self.y + self.height - 12
+                    size: self.width - 8, 8
+                    radius: [16, 16, 4, 4]
+            canvas.after:
+                PopMatrix
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: '24dp'
+        spacing: '12dp'
+
+        Widget:
+            size_hint_y: 0.08
+
+        ScreenTitle:
+            text: "Animations"
+            color: 0.95, 0.96, 0.98, 1
+
+        Label:
+            text: "Tap buttons to see animations"
+            font_size: '13sp'
+            size_hint_y: None
+            height: '24dp'
+            color: app.text_muted_color if app else (0.5, 0.53, 0.6, 1)
+
+        Widget:
+            size_hint_y: 0.5
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '12dp'
+
+            ModernButton:
+                text: "Bounce"
+                btn_color: 0.95, 0.45, 0.45, 1
+                on_release: root.bounce()
+
+            ModernButton:
+                text: "Spin"
+                btn_color: 0.35, 0.75, 0.55, 1
+                on_release: root.spin()
+
+        BoxLayout:
+            size_hint_y: None
+            height: '50dp'
+            spacing: '12dp'
+
+            ModernButton:
+                text: "Colors"
+                btn_color: 0.35, 0.55, 1.0, 1
+                on_release: root.cycle_colors()
+
+            ModernButton:
+                text: "Play All"
+                btn_color: 0.75, 0.45, 0.95, 1
+                on_release: root.play_all()
+
+        Widget:
+            size_hint_y: 0.08
+
+    BackButton:
+        on_release: root.go_to('home', 'right')
